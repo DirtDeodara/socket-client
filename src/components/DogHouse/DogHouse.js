@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import dogHouse from "../../icons/doghouse.png";
+import dogHouse from "../../icons/dogHouse.png";
 import dogArray from "../../dogs/dogsArray";
 import "./DogHouse.css";
 
@@ -15,7 +15,7 @@ const DogHouse = () => {
     setTimeout(() => {
       setShowBtn(false);
       setShowImage(true);
-    }, 6000);
+    }, 4000);
   };
 
   return (
