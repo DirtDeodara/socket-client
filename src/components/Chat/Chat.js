@@ -3,7 +3,7 @@ import queryString from "query-string";
 import InfoBar from '../InfoBar/InfoBar';
 import Canvas from '../Canvas/Canvas';
 import Messages from '../Messages/Messages';
-import DogHouse from "../DogHouse/DogHouse";
+// import DogHouse from "../DogHouse/DogHouse";
 import Header from "../Header/Header";
 
 import "./Chat.css";
@@ -59,7 +59,7 @@ const Chat = ({ location }) => {
     <div className="outerContainer">
       <div className="container">
         <Header />
-        <DogHouse />
+        {/* <DogHouse /> */}
         <Messages messages={messages} name={name}/>
         <Canvas message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
