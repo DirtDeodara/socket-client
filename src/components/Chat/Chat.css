@@ -16,6 +16,10 @@
   width: 100%;
 }
 
+#canvasAndDogHouseContainer {
+  display: flex;
+}
+
 @media (min-width: 320px) and (max-width: 480px) {
   .outerContainer {
     height: 100%;

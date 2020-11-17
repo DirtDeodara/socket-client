@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import queryString from "query-string";
-import InfoBar from '../InfoBar/InfoBar';
-import Input from '../Input/Input';
-import Messages from '../Messages/Messages';
+import Canvas from "../Canvas/Canvas";
+import Messages from "../Messages/Messages";
+import DogHouse from "../DogHouse/DogHouse";
+import Header from "../Header/Header";
 
 import "./Chat.css";
 
@@ -13,7 +14,7 @@ const Chat = ({ location }) => {
   const [team, setTeam] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [users, setUsers] = useState('');
+  // const [users, setUsers] = useState('');
   const ENDPOINT = "localhost:5000";
 
   useEffect(() => {
@@ -29,36 +30,43 @@ const Chat = ({ location }) => {
     setName(name);
     setTeam(team);
 
-    socket.emit('join', { name, team }, (error) => {
-      if(error) {
+    socket.emit("join", { name, team }, (error) => {
+      if (error) {
         alert(error);
       }
     });
   }, [ENDPOINT, location.search]);
 
   useEffect(() => {
-    socket.on('message', message => {
-      setMessages(messages => [ ...messages, message ]);
+    socket.on("message", (message) => {
+      setMessages((messages) => [...messages, message]);
     });
-    
-    socket.on("roomData", users => {
-      setUsers(users);
+
+    socket.on("roomData", (users) => {
+      // setUsers(users);
     });
-}, []);
+  }, []);
 
   const sendMessage = (event) => {
     event.preventDefault();
-    if(message) {
-      socket.emit('sendMessage', message, () => setMessage(''));
+    if (message) {
+      socket.emit("sendMessage", message, () => setMessage(""));
     }
-  }
-  
+  };
+
   return (
     <div className="outerContainer">
       <div className="container">
-        {/* <InfoBar room={room} /> */}
-        <Messages messages={messages} name={name}/>
-        <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
+        <Header />
+        <Messages messages={messages} name={name} />
+        <div id="canvasAndDogHouseContainer">
+          <Canvas
+            message={message}
+            setMessage={setMessage}
+            sendMessage={sendMessage}
+          />
+          <DogHouse />
+        </div>
       </div>
     </div>
   );
