@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import Input from '../Input/Input';
+import Input from '../ReplyInput/ReplyInput';
 import "./Shoutout.css";
+import commentIcon from "../../icons/comment-icon.svg";
 
 const ENDPOINT = "localhost:5000";
 const io = require("socket.io-client");
@@ -88,7 +89,8 @@ const Shoutout = (
     <div className={`${color} shoutoutContainer`}>
       <div className="shoutoutContainerPadding">
         <img
-          src="comment-icon.svg"
+          src={commentIcon}
+          color="white"
           className="commentIcon"
           onClick={toggleCommentsOpen}
         />

@@ -6,6 +6,10 @@
   right: 30px;
 }
 
+button, .emoji, .commentIcon {
+  cursor: pointer;
+}
+
 .shoutoutContainer {
   min-height: 150px;
   position: relative;
@@ -53,7 +57,7 @@ h3 {
   padding: 40px;
 }
 
-.replyInput {
+.replyInputContainer {
   width: 100%;
 }
 

@@ -8,7 +8,7 @@ const App = () => (
   <Router>
     <Route path="/" exact component={Join}/>
     <Route path="/chat" component={Chat}/>
-    <Route path="/shoutout" component={Shoutout}/>
+    <Route path="/shoutouts" component={Shoutout}/>
   </Router>
 );
 
