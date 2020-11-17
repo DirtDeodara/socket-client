@@ -7,11 +7,13 @@
   border-right: 8px solid #0092D3;
   justify-content: center;
 }
+
 #dogHouseBtn {
   background-color: transparent;
   border: none;
   padding: 0;
 }
+
 #dogHouse {
   height: 100px;
   width: 100px;
