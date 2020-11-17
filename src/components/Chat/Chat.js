@@ -10,14 +10,14 @@ let socket;
 
 const Chat = ({ location }) => {
   const [name, setName] = useState("");
-  const [room, setRoom] = useState("");
+  const [team, setTeam] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState('');
   const ENDPOINT = "localhost:5000";
 
   useEffect(() => {
-    const { name, room } = queryString.parse(location.search);
+    const { name, team } = queryString.parse(location.search);
 
     const io = require("socket.io-client");
     socket = io(ENDPOINT, {
@@ -27,9 +27,9 @@ const Chat = ({ location }) => {
     });
 
     setName(name);
-    setRoom(room);
+    setTeam(team);
 
-    socket.emit('join', { name, room }, (error) => {
+    socket.emit('join', { name, team }, (error) => {
       if(error) {
         alert(error);
       }
@@ -41,7 +41,7 @@ const Chat = ({ location }) => {
       setMessages(messages => [ ...messages, message ]);
     });
     
-    socket.on("roomData", ({ users }) => {
+    socket.on("roomData", users => {
       setUsers(users);
     });
 }, []);
@@ -56,7 +56,7 @@ const Chat = ({ location }) => {
   return (
     <div className="outerContainer">
       <div className="container">
-        <InfoBar room={room} />
+        {/* <InfoBar room={room} /> */}
         <Messages messages={messages} name={name}/>
         <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
