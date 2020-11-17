@@ -12,14 +12,14 @@ let socket;
 
 const Chat = ({ location }) => {
   const [name, setName] = useState("");
-  // const [team, setTeam] = useState("");
+  const [team, setTeam] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  // const [users, setUsers] = useState('');
+  const [users, setUsers] = useState('');
   const ENDPOINT = "localhost:5000";
 
   useEffect(() => {
-    const { name } = queryString.parse(location.search);
+    const { name, team } = queryString.parse(location.search);
 
     const io = require("socket.io-client");
     socket = io(ENDPOINT, {
@@ -29,9 +29,9 @@ const Chat = ({ location }) => {
     });
 
     setName(name);
-    // setTeam(team);
+    setTeam(team);
 
-    socket.emit('join', { name }, (error) => {
+    socket.emit('join', { name, team }, (error) => {
       if(error) {
         alert(error);
       }
