@@ -11,18 +11,6 @@ const socket = io(ENDPOINT, {
   },
 });
 
-const author = "Perry";
-const recipient = "Kent";
-const color = "green";
-const message = "Curabitur vulputate augue lectus, vel ultricies enim molestie id. Ut blandit laoreet dui a sodales. Sed mi augue, maximus sed turpis id, pretium iaculis dui. Praesent nisi augue, facilisis ac diam quis, convallis luctus eros. Praesent in tincidunt urna. Morbi egestas imperdiet erat vel pharetra. Cras a vulputate nibh."
-
-const comment = {
-  commentAuthor: "Frank",
-  commentMessage: message
-}
-
-const comments = [comment, comment]
-
 const Emoji = ({ label = "", count, onClick, symbol }) => (
   <div className="emojiContainer">
     <span
@@ -53,7 +41,7 @@ const CommentContainer = ({
 
   const sendReply = (event) => {
     event.preventDefault();
-    if (message) {
+    if (reply) {
       // TODO Add sendReply to server; will need a way to connect to comment
       socket.emit('sendReply', reply, () => setReply(''));
     }
@@ -72,13 +60,13 @@ const CommentContainer = ({
 };
 
 const Shoutout = (
-  // { 
-  //   name,
-  //   color,
-  //   message,
-  //   comments 
-  //   author
-  // }
+  { 
+    author,
+    color,
+    comments, 
+    message,
+    recipient
+  }
 ) => {
 
   const [commentsOpen, setCommentsOpen] = useState(false);
@@ -89,6 +77,7 @@ const Shoutout = (
     <div className={`${color} shoutoutContainer`}>
       <div className="shoutoutContainerPadding">
         <img
+          alt="comment"
           src={commentIcon}
           color="white"
           className="commentIcon"
