@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import queryString from "query-string";
-import InfoBar from '../InfoBar/InfoBar';
 import Input from '../Input/Input';
 import Messages from '../Messages/Messages';
+import DogHouse from "../DogHouse/DogHouse";
+import Header from "../Header/Header";
 
 import "./Chat.css";
 
@@ -10,10 +11,10 @@ let socket;
 
 const Chat = ({ location }) => {
   const [name, setName] = useState("");
-  const [team, setTeam] = useState("");
+  // const [team, setTeam] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [users, setUsers] = useState('');
+  // const [users, setUsers] = useState('');
   const ENDPOINT = "localhost:5000";
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const Chat = ({ location }) => {
     });
 
     setName(name);
-    setTeam(team);
+    // setTeam(team);
 
     socket.emit('join', { name, team }, (error) => {
       if(error) {
@@ -42,7 +43,7 @@ const Chat = ({ location }) => {
     });
     
     socket.on("roomData", users => {
-      setUsers(users);
+      // setUsers(users);
     });
 }, []);
 
@@ -56,7 +57,8 @@ const Chat = ({ location }) => {
   return (
     <div className="outerContainer">
       <div className="container">
-        {/* <InfoBar room={room} /> */}
+        <Header />
+        <DogHouse />
         <Messages messages={messages} name={name}/>
         <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
