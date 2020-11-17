@@ -3,6 +3,8 @@ import queryString from "query-string";
 import InfoBar from '../InfoBar/InfoBar';
 import Canvas from '../Canvas/Canvas';
 import Messages from '../Messages/Messages';
+import DogHouse from "../DogHouse/DogHouse";
+import Header from "../Header/Header";
 
 import "./Chat.css";
 
@@ -10,9 +12,10 @@ let socket;
 
 const Chat = ({ location }) => {
   const [name, setName] = useState("");
+  // const [team, setTeam] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [users, setUsers] = useState('');
+  // const [users, setUsers] = useState('');
   const ENDPOINT = "localhost:5000";
 
   useEffect(() => {
@@ -26,6 +29,7 @@ const Chat = ({ location }) => {
     });
 
     setName(name);
+    // setTeam(team);
 
     socket.emit('join', { name }, (error) => {
       if(error) {
@@ -39,8 +43,8 @@ const Chat = ({ location }) => {
       setMessages(messages => [ ...messages, message ]);
     });
     
-    socket.on("roomData", ({ users }) => {
-      setUsers(users);
+    socket.on("roomData", users => {
+      // setUsers(users);
     });
 }, []);
 
@@ -54,6 +58,8 @@ const Chat = ({ location }) => {
   return (
     <div className="outerContainer">
       <div className="container">
+        <Header />
+        <DogHouse />
         <Messages messages={messages} name={name}/>
         <Canvas message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
