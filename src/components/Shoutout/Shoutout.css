@@ -1,0 +1,63 @@
+
+.commentIcon {
+  height: 30px;
+  position: absolute;
+  top: 30px;
+  right: 30px;
+}
+
+button, .emoji, .commentIcon {
+  cursor: pointer;
+}
+
+.shoutoutContainer {
+  min-height: 150px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: space-around;
+}
+
+.emoji {
+  height: 50px;
+  font-size: large;
+}
+
+.emojiContainer {
+  margin-right: 20px;
+}
+
+.emojiRow {
+  display: flex;
+}
+
+.author {
+  text-align: right;
+}
+
+h3 {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+.green {
+  background-color: #2EA44E;
+  color: white;
+}
+
+.greenComment {
+  background-color: #197030;
+}
+
+.comment {
+  margin-bottom: 32px;
+}
+
+.shoutoutContainerPadding {
+  padding: 40px;
+}
+
+.replyInputContainer {
+  width: 100%;
+}
+
