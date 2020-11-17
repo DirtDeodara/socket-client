@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import dogHouse from "../../icons/doghouse.png";
+import doghouse from "../../icons/doghouse.png";
 import dogArray from "../../dogs/dogsArray";
 import "./DogHouse.css";
 
@@ -15,13 +15,13 @@ const DogHouse = () => {
     setTimeout(() => {
       setShowBtn(false);
       setShowImage(true);
-    }, 6000);
+    }, 4000);
   };
 
   return (
     <div id="dogHouseContainer">
       <button id="dogHouseBtn" onClick={showDog}>
-        <img id="dogHouse" src={dogHouse} alt="dog house" hidden={showBtn} />
+        <img id="dogHouse" src={doghouse} alt="dog house" hidden={showBtn} />
       </button>
       <img
         id="dogImage"
