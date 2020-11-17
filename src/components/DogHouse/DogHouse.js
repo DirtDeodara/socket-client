@@ -15,7 +15,7 @@ const DogHouse = () => {
     setTimeout(() => {
       setShowBtn(false);
       setShowImage(true);
-    }, 6000);
+    }, 4000);
   };
 
   return (
