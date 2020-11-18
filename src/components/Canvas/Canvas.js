@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
-
+import React from 'react';
 import './Canvas.css';
 
-const Canvas = ({ setMessage, sendMessage, message }) => {
-  const [recipient, setRecipient] = useState("");
+const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
+  
+  const { recipient, color, message } = newShoutout;
+
+  const handleInputChange = (e) => {
+    setNewShoutout({
+      ...newShoutout,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
       <div className="canvas-container">
         <section className="canvas-section" id="msg-form">
@@ -11,19 +19,26 @@ const Canvas = ({ setMessage, sendMessage, message }) => {
             <input
               id="recipient-input"
               className="input"
+              name="recipient"
               type="text"
               value={recipient}
               placeholder="Shoutout to..."
-              onChange={({ taget: { value } }) => setRecipient(value)}
+              onChange={handleInputChange}
             />
-            <select id="color-input" className="input">
+            <select
+              className="input"
+              id="color-input"
+              name="color"
+              onChange={handleInputChange}
+              value={color}
+            >
               <option>BG color</option>
-              <option value="#FFFF33">Yellow</option>
-              <option value="#FF66CC">Pink</option>
-              <option value="#FF9933">Orange</option>
-              <option value="#33CCFF">Blue</option>
-              <option value="#33FF66">Green</option>
-              <option value="#CC66FF">Purple</option>
+              <option value="yellow">Yellow</option>
+              <option value="pink">Pink</option>
+              <option value="orange">Orange</option>
+              <option value="blue">Blue</option>
+              <option value="green">Green</option>
+              <option value="purple">Purple</option>
             </select>
           </div>
           <div>
@@ -32,14 +47,15 @@ const Canvas = ({ setMessage, sendMessage, message }) => {
               className="input"
               rows="5"
               placeholder="Type a message..."
+              name="message"
               value={message}
-              onChange={({ target: { value } }) => setMessage(value)}
-              onKeyPress={event => event.key === 'Enter' ? sendMessage(event) : null}
+              onChange={handleInputChange}
+              onKeyPress={event => event.key === 'Enter' ? sendShoutout(event) : null}
             />
           </div>
         </section>
         <section className="canvas-section">
-          <button className="sendButton" onClick={e => sendMessage(e)}>Send</button>
+          <button className="sendButton" onClick={e => sendShoutout(e)}>Send</button>
         </section>
       </div>
   )
