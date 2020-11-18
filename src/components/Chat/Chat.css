@@ -9,15 +9,21 @@
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   background: #FFFFFF;
   border-radius: 8px;
   height: 100%;
   width: 100%;
 }
 
+.bottomSection {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
 #canvasAndDogHouseContainer {
   display: flex;
+  margin: 30px 40px;
 }
 
 @media (min-width: 320px) and (max-width: 480px) {

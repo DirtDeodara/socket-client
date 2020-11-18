@@ -1,0 +1,57 @@
+.commentIcon {
+  height: 30px;
+  position: absolute;
+  top: 30px;
+  right: 30px;
+}
+
+button, .emoji, .commentIcon {
+  cursor: pointer;
+}
+
+.shoutoutContainer {
+  min-height: 150px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 30px 100px;
+  border-radius: 25px;
+}
+
+.emoji {
+  height: 50px;
+  font-size: large;
+}
+
+.emojiContainer {
+  margin-right: 20px;
+}
+
+.emojiRow {
+  display: flex;
+}
+
+.author {
+  text-align: right;
+}
+
+h3 {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+.comment {
+  margin-bottom: 32px;
+}
+
+.commentContainer {
+  border-radius: 0px 0px 25px 25px;
+}
+
+.shoutoutContainerPadding {
+  padding: 25px 40px;
+}
+
+.replyInputContainer {
+  width: 100%;
+}
