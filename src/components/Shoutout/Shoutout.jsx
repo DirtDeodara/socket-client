@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import Input from '../ReplyInput/ReplyInput';
+import ReplyInput from '../ReplyInput/ReplyInput';
 import "./Shoutout.css";
 import commentIcon from "../../icons/comment-icon.svg";
+import colorFactory from "./shoutoutColors";
 
 const ENDPOINT = "localhost:5000";
 const io = require("socket.io-client");
@@ -31,8 +32,8 @@ const CommentContainer = ({
   color,
   open
 }) => {
-  const commentElements = comments.map(({ commentAuthor, commentMessage }) => (
-    <div className="comment">
+  const commentElements = comments.map(({ commentAuthor, commentMessage }, i) => (
+    <div className="comment" key={i}>
       <h3>{commentAuthor}</h3>
       <p>{commentMessage}</p>
     </div>
@@ -50,9 +51,9 @@ const CommentContainer = ({
   return (
     <>
       {open && (
-        <div className={`${color}Comment shoutoutContainerPadding`}>
+        <div className="shoutoutContainerPadding commentContainer" style={{ backgroundColor: colorFactory[color].commentBackground }}>
           {commentElements}
-          <Input setMessage={setReply} sendMessage={sendReply} message={reply} />
+          <ReplyInput setMessage={setReply} sendMessage={sendReply} message={reply} buttonColor={colorFactory[color].accent} />
         </div>
       )}
     </>
@@ -74,7 +75,7 @@ const Shoutout = (
   const toggleCommentsOpen = () => setCommentsOpen(!commentsOpen);
 
   return (
-    <div className={`${color} shoutoutContainer`}>
+    <div className="shoutoutContainer" style={{ backgroundColor: colorFactory[color].mainBackground, color: colorFactory[color].text }}>
       <div className="shoutoutContainerPadding">
         <img
           alt="comment"
@@ -83,7 +84,7 @@ const Shoutout = (
           className="commentIcon"
           onClick={toggleCommentsOpen}
         />
-        <h2>Shoutout to {recipient}</h2>
+        <h2>Shoutout to <span style={{ color: colorFactory[color].accent }}>{recipient}</span></h2>
         <p>{message}</p>
         <div className="emojiRow">
           {/* TODO onClick and count should come from socket.io? */}
