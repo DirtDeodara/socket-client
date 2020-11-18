@@ -2,7 +2,7 @@ import React from 'react';
 
 import './ReplyInput.css';
 
-const Input = ({ setMessage, sendMessage, message }) => (
+const ReplyInput = ({ setMessage, sendMessage, message, buttonColor }) => (
   <form className="form" onSubmit={e => sendMessage(e)}>
     <input
       className="replyInput"
@@ -12,8 +12,8 @@ const Input = ({ setMessage, sendMessage, message }) => (
       onChange={({ target: { value } }) => setMessage(value)}
       onKeyPress={event => event.key === 'Enter' ? sendMessage(event) : null}
     />
-    <button className="replyButton">Reply</button>
+    <button className="replyButton" style={{ backgroundColor: buttonColor, color: buttonColor === "#ffed49" ? "#333333" : "white" }}>Reply</button>
   </form>
 )
 
-export default Input;
+export default ReplyInput;

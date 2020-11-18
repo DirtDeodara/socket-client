@@ -1,24 +1,30 @@
 import React, { useState, useEffect } from "react";
 import queryString from "query-string";
 import Canvas from "../Canvas/Canvas";
-import Messages from "../Messages/Messages";
 import DogHouse from "../DogHouse/DogHouse";
 import Header from "../Header/Header";
+import ShoutoutList from "../ShoutoutList/ShoutoutList";
 
 import "./Chat.css";
 
 let socket;
 
 const Chat = ({ location }) => {
-  const [name, setName] = useState("");
-  const [team, setTeam] = useState("");
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
-  const [users, setUsers] = useState('');
+  const [user, setUser] = useState("");
+  const emptyShoutout = { 
+    author: "",
+    color: "",
+    comments: [], 
+    message: "",
+    recipient: ""
+  }
+  const [newShoutout, setNewShoutout] = useState(emptyShoutout);
+  const [shoutouts, setShoutouts] = useState([]);
+  // const [users, setUsers] = useState('');
   const ENDPOINT = "localhost:5000";
 
   useEffect(() => {
-    const { name, team } = queryString.parse(location.search);
+    const { name } = queryString.parse(location.search);
 
     const io = require("socket.io-client");
     socket = io(ENDPOINT, {
@@ -27,10 +33,9 @@ const Chat = ({ location }) => {
       },
     });
 
-    setName(name);
-    setTeam(team);
+    setUser(name);
 
-    socket.emit("join", { name, team }, (error) => {
+    socket.emit("join", { name }, (error) => {
       if (error) {
         alert(error);
       }
@@ -38,8 +43,8 @@ const Chat = ({ location }) => {
   }, [ENDPOINT, location.search]);
 
   useEffect(() => {
-    socket.on("message", (message) => {
-      setMessages((messages) => [...messages, message]);
+    socket.on("shoutout", (newShoutout) => {
+      setShoutouts((shoutouts) => [...shoutouts, newShoutout]);
     });
 
     socket.on("roomData", (users) => {
@@ -47,10 +52,10 @@ const Chat = ({ location }) => {
     });
   }, []);
 
-  const sendMessage = (event) => {
+  const sendShoutout = (event) => {
     event.preventDefault();
-    if (message) {
-      socket.emit("sendMessage", message, () => setMessage(""));
+    if (newShoutout) {
+      socket.emit("sendShoutout", { ...newShoutout, author: user }, () => setNewShoutout(emptyShoutout));
     }
   };
 
@@ -58,14 +63,16 @@ const Chat = ({ location }) => {
     <div className="outerContainer">
       <div className="container">
         <Header />
-        <Messages messages={messages} name={name} />
-        <div id="canvasAndDogHouseContainer">
-          <Canvas
-            message={message}
-            setMessage={setMessage}
-            sendMessage={sendMessage}
-          />
-          <DogHouse />
+        <ShoutoutList shoutouts={shoutouts} />
+        <div className="bottomSection">
+          <div id="canvasAndDogHouseContainer">
+            <Canvas
+              newShoutout={newShoutout}
+              setNewShoutout={setNewShoutout}
+              sendShoutout={sendShoutout}
+            />
+            <DogHouse />
+          </div>
         </div>
       </div>
     </div>
