@@ -4,9 +4,9 @@ import Shoutout from '../Shoutout/Shoutout';
 import "./ShoutoutList.css";
 
 const ShoutoutList = ({ shoutouts }) => (
-  <ScrollToBottom className="scrollContainer">
+  <ScrollToBottom className="shoutoutList">
     {shoutouts.map((shoutout, i) => (
-      <div key={i} className="shoutoutList">
+      <div key={i} className="shoutoutItem">
         <Shoutout {...shoutout} />
       </div>
       )

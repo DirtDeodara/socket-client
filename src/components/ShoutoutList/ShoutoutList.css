@@ -1,7 +1,11 @@
 .shoutoutList {
+  height: 100%;
+}
+
+.shoutoutItem {
   margin-bottom: 50px;
 }
 
-.scrollContainer {
-  margin-bottom: 300px;
+div.shoutoutItem:last-of-type {
+  margin-bottom: 380px;
 }
