@@ -49,50 +49,53 @@ const CommentContainer = ({
   }
 
   return (
-      <div className={`${open ? "commentContainerOpen" : "commentContainerClosed"} shoutoutContainerPadding commentContainer`} style={{ backgroundColor: colorFactory[color].commentBackground }}>
-        {commentElements}
-        <ReplyInput setMessage={setReply} sendMessage={sendReply} message={reply} buttonColor={colorFactory[color].accent} />
-      </div>
+    <div className={`${open ? "commentContainerOpen" : "commentContainerClosed"} shoutoutContainerPadding commentContainer`} style={{ backgroundColor: colorFactory[color].commentBackground }}>
+      {commentElements}
+      <ReplyInput setMessage={setReply} sendMessage={sendReply} message={reply} buttonColor={colorFactory[color].accent} />
+    </div>
   )
 };
 
-const Shoutout = (
-  { 
+const Shoutout = ({
     author,
     color,
-    comments, 
+    comments,
     message,
     recipient
-  }
-) => {
+  }) => {
 
   const [commentsOpen, setCommentsOpen] = useState(false);
 
   const toggleCommentsOpen = () => setCommentsOpen(!commentsOpen);
 
   return (
-    <div style={{ margin: "30px 100px -85px" }}>
-    <div className={`${commentsOpen ? "flattenedBottomCorners" : "curvedBottomCorners"} shoutoutContainer`} style={{ backgroundColor: colorFactory[color].mainBackground, color: colorFactory[color].text }}>
-      <div className="shoutoutContainerPadding">
-        <img
-          alt="comment"
-          src={commentIcon}
-          color="white"
-          className={`${commentsOpen ? "commentIconOpen" : "commentIconClosed"} commentIcon`}
-          onClick={toggleCommentsOpen}
-        />
-        <h2>Shoutout to <span style={{ color: colorFactory[color].accent }}>{recipient}</span></h2>
-        <p>{message}</p>
-        <div className="emojiRow">
-          {/* TODO onClick and count should come from socket.io? */}
-          <Emoji symbol="😂" label="laugh" count={3} onClick={() => { }} />
-          <Emoji symbol="❤️" label="love" />
-          <Emoji symbol="☝️" label="up" />
+    <div className="shoutoutOuterContainer">
+      <div
+        className={`${commentsOpen ? "flattenedBottomCorners" : "curvedBottomCorners"} shoutoutContainer`} style={{ backgroundColor: colorFactory[color].mainBackground, color: colorFactory[color].text }}>
+        <div className="shoutoutContainerPadding">
+          <img
+            alt="comment"
+            src={commentIcon}
+            color="white"
+            className={`${commentsOpen ? "commentIconOpen" : "commentIconClosed"} commentIcon`}
+            onClick={toggleCommentsOpen}
+          />
+          <h2>Shoutout to <span style={{ color: colorFactory[color].accent }}>{recipient}</span></h2>
+          <p>{message}</p>
+          <div className="emojiRow">
+            {/* TODO onClick and count should come from socket.io? */}
+            <Emoji symbol="😂" label="laugh" count={3} onClick={() => { }} />
+            <Emoji symbol="❤️" label="love" />
+            <Emoji symbol="☝️" label="up" />
+          </div>
+          <h3 className="author">{author}</h3>
         </div>
-        <h3 className="author">{author}</h3>
       </div>
-    </div>
-      <CommentContainer comments={comments} color={color} open={commentsOpen} />
+      <CommentContainer
+        comments={comments}
+        color={color}
+        open={commentsOpen}
+      />
     </div>
   );
 }

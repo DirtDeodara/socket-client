@@ -20,6 +20,8 @@ const Chat = ({ location }) => {
   }
   const [newShoutout, setNewShoutout] = useState(emptyShoutout);
   const [shoutouts, setShoutouts] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [welcomeMessage, setWelcomeMessage] = useState({ sender: "", text: "" })
   // const [users, setUsers] = useState('');
   const ENDPOINT = "localhost:5000";
 
@@ -47,6 +49,14 @@ const Chat = ({ location }) => {
       setShoutouts((shoutouts) => [...shoutouts, newShoutout]);
     });
 
+    socket.on('message', message => {
+      setMessages(messages => [ ...messages, message ]);
+    });
+
+    socket.on('welcomeMessage', welcomeMessage => {
+      setWelcomeMessage(welcomeMessage);
+    });
+
     socket.on("roomData", (users) => {
       // setUsers(users);
     });
@@ -63,13 +73,16 @@ const Chat = ({ location }) => {
     <div className="outerContainer">
       <div className="container">
         <Header />
-        <ShoutoutList shoutouts={shoutouts} />
+        <ShoutoutList
+          welcomeMessage={welcomeMessage}
+          shoutouts={shoutouts}
+        />
         <div className="bottomSection">
           <div id="canvasAndDogHouseContainer">
             <Canvas
               newShoutout={newShoutout}
-              setNewShoutout={setNewShoutout}
               sendShoutout={sendShoutout}
+              setNewShoutout={setNewShoutout}
             />
             <DogHouse />
           </div>
