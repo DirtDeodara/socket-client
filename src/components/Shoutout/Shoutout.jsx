@@ -49,14 +49,10 @@ const CommentContainer = ({
   }
 
   return (
-    <>
-      {open && (
-        <div className="shoutoutContainerPadding commentContainer" style={{ backgroundColor: colorFactory[color].commentBackground }}>
-          {commentElements}
-          <ReplyInput setMessage={setReply} sendMessage={sendReply} message={reply} buttonColor={colorFactory[color].accent} />
-        </div>
-      )}
-    </>
+      <div className={`${open ? "commentContainerOpen" : "commentContainerClosed"} shoutoutContainerPadding commentContainer`} style={{ backgroundColor: colorFactory[color].commentBackground }}>
+        {commentElements}
+        <ReplyInput setMessage={setReply} sendMessage={sendReply} message={reply} buttonColor={colorFactory[color].accent} />
+      </div>
   )
 };
 
@@ -75,13 +71,14 @@ const Shoutout = (
   const toggleCommentsOpen = () => setCommentsOpen(!commentsOpen);
 
   return (
-    <div className="shoutoutContainer" style={{ backgroundColor: colorFactory[color].mainBackground, color: colorFactory[color].text }}>
+    <div style={{ margin: "30px 100px -85px" }}>
+    <div className={`${commentsOpen ? "flattenedBottomCorners" : "curvedBottomCorners"} shoutoutContainer`} style={{ backgroundColor: colorFactory[color].mainBackground, color: colorFactory[color].text }}>
       <div className="shoutoutContainerPadding">
         <img
           alt="comment"
           src={commentIcon}
           color="white"
-          className="commentIcon"
+          className={`${commentsOpen ? "commentIconOpen" : "commentIconClosed"} commentIcon`}
           onClick={toggleCommentsOpen}
         />
         <h2>Shoutout to <span style={{ color: colorFactory[color].accent }}>{recipient}</span></h2>
@@ -94,6 +91,7 @@ const Shoutout = (
         </div>
         <h3 className="author">{author}</h3>
       </div>
+    </div>
       <CommentContainer comments={comments} color={color} open={commentsOpen} />
     </div>
   );
