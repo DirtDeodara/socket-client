@@ -3,24 +3,23 @@ import queryString from "query-string";
 import Canvas from "../Canvas/Canvas";
 import DogHouse from "../DogHouse/DogHouse";
 import Header from "../Header/Header";
-import ShoutoutList from "../ShoutoutList/ShoutoutList";
-
+import MessageList from "../MessageList/MessageList";
 import "./Chat.css";
 
 let socket;
 
 const Chat = ({ location }) => {
   const [user, setUser] = useState("");
-  const emptyShoutout = { 
+  const emptyShoutout = {
     author: "",
     color: "",
-    comments: [], 
-    message: "",
-    recipient: ""
+    comments: [],
+    recipient: "",
+    text: "",
+    variant: "shoutout",
   }
   const [newShoutout, setNewShoutout] = useState(emptyShoutout);
-  const [shoutouts, setShoutouts] = useState([]);
-  // const [users, setUsers] = useState('');
+  const [messageList, setMessageList] = useState([]);
   const ENDPOINT = "localhost:5000";
 
   useEffect(() => {
@@ -44,11 +43,11 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
     socket.on("shoutout", (newShoutout) => {
-      setShoutouts((shoutouts) => [...shoutouts, newShoutout]);
+      setMessageList((messageList) => [...messageList, newShoutout]);
     });
 
-    socket.on("roomData", (users) => {
-      // setUsers(users);
+    socket.on('chatMessage', chatMessage => {
+      setMessageList((messageList) => [...messageList, chatMessage]);
     });
   }, []);
 
@@ -63,13 +62,13 @@ const Chat = ({ location }) => {
     <div className="outerContainer">
       <div className="container">
         <Header />
-        <ShoutoutList shoutouts={shoutouts} />
+        <MessageList messageList={messageList} />
         <div className="bottomSection">
           <div id="canvasAndDogHouseContainer">
             <Canvas
               newShoutout={newShoutout}
-              setNewShoutout={setNewShoutout}
               sendShoutout={sendShoutout}
+              setNewShoutout={setNewShoutout}
             />
             <DogHouse />
           </div>

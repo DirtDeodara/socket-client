@@ -7,7 +7,6 @@ const DogHouse = () => {
   const [image, setImage] = useState();
   const [showBtn, setShowBtn] = useState(false);
   const [showImage, setShowImage] = useState(true);
-  console.log(image);
   const showDog = () => {
     setImage(dogArray[Math.floor(Math.random() * 49)])
     setShowBtn(true);

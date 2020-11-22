@@ -23,6 +23,10 @@ button, .emoji, .commentIcon {
   cursor: pointer;
 }
 
+.shoutoutOuterContainer {
+  margin: 30px 100px -85px
+}
+
 .shoutoutContainer {
   min-height: 150px;
   position: relative;
@@ -43,8 +47,7 @@ button, .emoji, .commentIcon {
 }
 
 .emoji {
-  height: 50px;
-  font-size: large;
+  font-size: 25px;
 }
 
 .emojiContainer {
@@ -90,4 +93,8 @@ h3 {
 
 .replyInputContainer {
   width: 100%;
+}
+
+.largeBottomMargin {
+  margin-bottom: 400px;
 }

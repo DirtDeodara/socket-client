@@ -1,0 +1,47 @@
+.messageBox {
+  background: #F3F3F3;
+  border-radius: 20px;
+  padding: 5px 20px;
+  color: white;
+  display: inline-block;
+  max-width: 80%;
+}
+
+.messageText {
+  width: 100%;
+  font-size: 1.1em;
+  word-wrap: break-word;
+}
+
+.messageText img {
+  vertical-align: middle;
+}
+
+.messageContainer {
+  display: flex;
+  margin: 40px 100px;
+}
+
+.pl-10 {
+  padding-left: 10px;
+}
+
+.justifyStart {
+  justify-content: flex-start;
+}
+
+.colorDark {
+  color: #353535;
+}
+
+.backgroundLight {
+  background: #F3F3F3;
+}
+
+.colorWhite {
+  color: white;
+}
+
+.backgroundDark {
+  background: #3d3d3d;
+}

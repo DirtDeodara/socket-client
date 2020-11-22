@@ -1,0 +1,16 @@
+.messageList {
+  height: 100%;
+}
+
+.scrollButton {
+  z-index: 20;
+  top: 20px;
+}
+
+.messageItem {
+  margin-bottom: 50px;
+}
+
+div.messageItem:last-of-type {
+  margin-bottom: 425px;
+}
