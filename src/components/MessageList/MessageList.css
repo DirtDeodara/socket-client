@@ -1,4 +1,4 @@
-.displayList {
+.messageList {
   height: 100%;
 }
 
@@ -7,10 +7,10 @@
   top: 20px;
 }
 
-.displayItem {
+.messageItem {
   margin-bottom: 50px;
 }
 
-div.displayItem:last-of-type {
+div.messageItem:last-of-type {
   margin-bottom: 425px;
 }

@@ -1,7 +1,7 @@
 import React from "react";
-import "./AdminMessage.css";
+import "./ChatMessage.css";
 
-const AdminMessage = ({ author, text }) => {
+const ChatMessage = ({ author, text }) => {
   return (
     <div className="messageContainer justifyStart">
       <div className={`messageBox ${author === "Kent" ? "backgroundLight" : "backgroundDark"}`}>
@@ -12,4 +12,4 @@ const AdminMessage = ({ author, text }) => {
   );
 };
 
-export default AdminMessage;
+export default ChatMessage;
