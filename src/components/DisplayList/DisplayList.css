@@ -1,4 +1,4 @@
-.shoutoutList {
+.displayList {
   height: 100%;
 }
 
@@ -7,10 +7,10 @@
   top: 20px;
 }
 
-.shoutoutItem {
+.displayItem {
   margin-bottom: 50px;
 }
 
-div.shoutoutItem:last-of-type {
+div.displayItem:last-of-type {
   margin-bottom: 425px;
 }

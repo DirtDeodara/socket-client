@@ -3,26 +3,23 @@ import queryString from "query-string";
 import Canvas from "../Canvas/Canvas";
 import DogHouse from "../DogHouse/DogHouse";
 import Header from "../Header/Header";
-import ShoutoutList from "../ShoutoutList/ShoutoutList";
-
+import DisplayList from "../DisplayList/DisplayList";
 import "./Chat.css";
 
 let socket;
 
 const Chat = ({ location }) => {
   const [user, setUser] = useState("");
-  const emptyShoutout = { 
+  const emptyShoutout = {
     author: "",
     color: "",
-    comments: [], 
-    message: "",
-    recipient: ""
+    comments: [],
+    recipient: "",
+    type: "shoutout",
+    text: ""
   }
   const [newShoutout, setNewShoutout] = useState(emptyShoutout);
-  const [shoutouts, setShoutouts] = useState([]);
-  const [messages, setMessages] = useState([]);
-  const [welcomeMessage, setWelcomeMessage] = useState({ sender: "", text: "" })
-  // const [users, setUsers] = useState('');
+  const [displayList, setDisplayList] = useState([]);
   const ENDPOINT = "localhost:5000";
 
   useEffect(() => {
@@ -46,19 +43,11 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
     socket.on("shoutout", (newShoutout) => {
-      setShoutouts((shoutouts) => [...shoutouts, newShoutout]);
+      setDisplayList((displayList) => [...displayList, newShoutout]);
     });
 
-    socket.on('message', message => {
-      setMessages(messages => [ ...messages, message ]);
-    });
-
-    socket.on('welcomeMessage', welcomeMessage => {
-      setWelcomeMessage(welcomeMessage);
-    });
-
-    socket.on("roomData", (users) => {
-      // setUsers(users);
+    socket.on('adminMessage', adminMessage => {
+      setDisplayList((displayList) => [...displayList, adminMessage]);
     });
   }, []);
 
@@ -73,10 +62,7 @@ const Chat = ({ location }) => {
     <div className="outerContainer">
       <div className="container">
         <Header />
-        <ShoutoutList
-          welcomeMessage={welcomeMessage}
-          shoutouts={shoutouts}
-        />
+        <DisplayList displayList={displayList} />
         <div className="bottomSection">
           <div id="canvasAndDogHouseContainer">
             <Canvas

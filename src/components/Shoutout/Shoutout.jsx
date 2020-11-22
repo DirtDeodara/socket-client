@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import ReplyInput from '../ReplyInput/ReplyInput';
-import "./Shoutout.css";
 import commentIcon from "../../icons/comment-icon.svg";
 import colorFactory from "./shoutoutColors";
+import "./Shoutout.css";
 
 const ENDPOINT = "localhost:5000";
 const io = require("socket.io-client");
@@ -12,7 +12,7 @@ const socket = io(ENDPOINT, {
   },
 });
 
-const Emoji = ({ label = "", count, onClick, symbol }) => (
+const Emoji = ({ count, label = "", onClick, symbol }) => (
   <div className="emojiContainer">
     <span
       className="emoji"
@@ -60,8 +60,8 @@ const Shoutout = ({
     author,
     color,
     comments,
-    message,
-    recipient
+    recipient,
+    text,
   }) => {
 
   const [commentsOpen, setCommentsOpen] = useState(false);
@@ -75,13 +75,13 @@ const Shoutout = ({
         <div className="shoutoutContainerPadding">
           <img
             alt="comment"
-            src={commentIcon}
-            color="white"
             className={`${commentsOpen ? "commentIconOpen" : "commentIconClosed"} commentIcon`}
+            color="white"
             onClick={toggleCommentsOpen}
+            src={commentIcon}
           />
           <h2>Shoutout to <span style={{ color: colorFactory[color].accent }}>{recipient}</span></h2>
-          <p>{message}</p>
+          <p>{text}</p>
           <div className="emojiRow">
             {/* TODO onClick and count should come from socket.io? */}
             <Emoji symbol="😂" label="laugh" count={3} onClick={() => { }} />
@@ -92,8 +92,8 @@ const Shoutout = ({
         </div>
       </div>
       <CommentContainer
-        comments={comments}
         color={color}
+        comments={comments}
         open={commentsOpen}
       />
     </div>

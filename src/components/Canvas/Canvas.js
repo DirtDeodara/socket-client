@@ -3,7 +3,7 @@ import './Canvas.css';
 
 const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
   
-  const { recipient, color, message } = newShoutout;
+  const { color, recipient, text } = newShoutout;
 
   const handleInputChange = (e) => {
     setNewShoutout({
@@ -47,8 +47,8 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
               className="input"
               rows="5"
               placeholder="Type a message..."
-              name="message"
-              value={message}
+              name="text"
+              value={text}
               onChange={handleInputChange}
               onKeyPress={event => event.key === 'Enter' ? sendShoutout(event) : null}
             />
