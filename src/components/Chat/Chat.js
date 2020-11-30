@@ -11,13 +11,13 @@ let socket;
 
 const Chat = ({ location }) => {
   const [user, setUser] = useState("");
-  const emptyShoutout = { 
+  const emptyShoutout = {
     author: "",
     color: "",
-    comments: [], 
+    comments: [],
     message: "",
-    recipient: ""
-  }
+    recipient: "",
+  };
   const [newShoutout, setNewShoutout] = useState(emptyShoutout);
   const [shoutouts, setShoutouts] = useState([]);
   // const [users, setUsers] = useState('');
@@ -46,33 +46,31 @@ const Chat = ({ location }) => {
     socket.on("shoutout", (newShoutout) => {
       setShoutouts((shoutouts) => [...shoutouts, newShoutout]);
     });
-
-    socket.on("roomData", (users) => {
-      // setUsers(users);
-    });
   }, []);
 
   const sendShoutout = (event) => {
     event.preventDefault();
     if (newShoutout) {
-      socket.emit("sendShoutout", { ...newShoutout, author: user }, () => setNewShoutout(emptyShoutout));
+      socket.emit("sendShoutout", { ...newShoutout, author: user }, () =>
+        setNewShoutout(emptyShoutout)
+      );
     }
   };
 
   return (
-    <div className="outerContainer">
-      <div className="container">
+    <div className="container">
+      <div className="header">
         <Header />
-        <ShoutoutList shoutouts={shoutouts} />
-        <div className="bottomSection">
-          <div id="canvasAndDogHouseContainer">
-            <Canvas
-              newShoutout={newShoutout}
-              setNewShoutout={setNewShoutout}
-              sendShoutout={sendShoutout}
-            />
-            <DogHouse />
-          </div>
+      </div>
+      <ShoutoutList shoutouts={shoutouts} />
+      <div className="bottomSection">
+        <div id="canvasAndDogHouseContainer">
+          <Canvas
+            newShoutout={newShoutout}
+            setNewShoutout={setNewShoutout}
+            sendShoutout={sendShoutout}
+          />
+          <DogHouse />
         </div>
       </div>
     </div>
