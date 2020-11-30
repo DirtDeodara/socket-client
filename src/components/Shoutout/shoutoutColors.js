@@ -54,7 +54,7 @@ const colorFactory = {
       accent: "#C6D233"
     },
     yellow: {
-      mainBackground: "#",
+      mainBackground: "#D4B95E",
       text: "#333333",
       commentBackground: "#CC6741",
       accent: "#809f2b"
