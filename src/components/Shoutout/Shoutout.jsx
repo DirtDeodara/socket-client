@@ -1,16 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReplyInput from '../ReplyInput/ReplyInput';
+import { socket } from "../../utils/socket"
 import commentIcon from "../../icons/comment-icon.svg";
 import colorFactory from "./shoutoutColors";
 import "./Shoutout.css";
-
-// const ENDPOINT = "localhost:5000";
-// const io = require("socket.io-client");
-// const socket = io(ENDPOINT, {
-//   extraHeaders: {
-//     "Access-Control-Allow-Credential": true,
-//   },
-// });
 
 const Emoji = ({ count, label = "", onClick, symbol }) => (
   <div className="emojiContainer">
@@ -28,15 +21,29 @@ const Emoji = ({ count, label = "", onClick, symbol }) => (
 );
 
 const CommentContainer = ({
-  comments,
   color,
   id,
   open,
-  reply,
-  sendReply,
-  setReply
 }) => {
-  const commentElements = comments.map(({ commentAuthor, commentMessage }, i) => (
+  const [reply, setReply] = useState("");
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    socket.on('comment', comment => {
+      if (id === comment.id) {
+        setComments([...comments, comment])
+      }
+    });
+  }, [comments, id])
+
+  const sendReply = (event) => {
+    event.preventDefault();
+    if (reply) {
+      socket.emit('sendReply', { id, text: reply }, () => setReply(''));
+    }
+  }
+
+  const commentElements = comments.map(({ user: commentAuthor, text: commentMessage }, i) => (
     <div className="comment" key={i}>
       <h3>{commentAuthor}</h3>
       <p>{commentMessage}</p>
@@ -46,25 +53,19 @@ const CommentContainer = ({
   return (
     <div className={`${open ? "commentContainerOpen" : "commentContainerClosed"} shoutoutContainerPadding commentContainer`} style={{ backgroundColor: colorFactory[color].commentBackground }}>
       {commentElements}
-      <ReplyInput setMessage={setReply} sendMessage={(e) => sendReply(e, id)} message={reply} buttonColor={colorFactory[color].accent} />
+      <ReplyInput setMessage={setReply} sendMessage={sendReply} message={reply} buttonColor={colorFactory[color].accent} />
     </div>
   )
 };
 
 const Shoutout = ({
-    author,
-    color,
-    comments,
-    id,
-    recipient,
-    reply,
-    sendReply,
-    setReply,
-    text,
-  }) => {
-
+  author,
+  color,
+  id,
+  recipient,
+  text,
+}) => {
   const [commentsOpen, setCommentsOpen] = useState(false);
-
   const toggleCommentsOpen = () => setCommentsOpen(!commentsOpen);
 
   return (
@@ -82,7 +83,7 @@ const Shoutout = ({
           <h2>Shoutout to <span style={{ color: colorFactory[color].accent }}>{recipient}</span></h2>
           <p>{text}</p>
           <div className="emojiRow">
-            {/* TODO onClick and count should come from socket.io? */}
+            {/* TODO incrememnt emoji count on click; send to back end and increase count on front end */}
             <Emoji symbol="😂" label="laugh" count={3} onClick={() => { }} />
             <Emoji symbol="❤️" label="love" />
             <Emoji symbol="☝️" label="up" />
@@ -92,12 +93,8 @@ const Shoutout = ({
       </div>
       <CommentContainer
         color={color}
-        comments={comments}
         id={id}
         open={commentsOpen}
-        reply={reply}
-        sendReply={sendReply}
-        setReply={setReply} 
       />
     </div>
   );

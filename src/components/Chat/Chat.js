@@ -5,16 +5,14 @@ import Canvas from "../Canvas/Canvas";
 import DogHouse from "../DogHouse/DogHouse";
 import Header from "../Header/Header";
 import MessageList from "../MessageList/MessageList";
+import { socket } from "../../utils/socket"
 import "./Chat.css";
-
-let socket;
 
 const Chat = ({ location }) => {
   const [user, setUser] = useState("");
   const emptyShoutout = {
     author: "",
     color: "",
-    comments: [],
     id: "",
     recipient: "",
     text: "",
@@ -22,18 +20,9 @@ const Chat = ({ location }) => {
   }
   const [newShoutout, setNewShoutout] = useState(emptyShoutout);
   const [messageList, setMessageList] = useState([]);
-  const [reply, setReply] = useState("");
-  const ENDPOINT = "localhost:5000";
 
   useEffect(() => {
     const { name } = queryString.parse(location.search);
-
-    const io = require("socket.io-client");
-    socket = io(ENDPOINT, {
-      extraHeaders: {
-        "Access-Control-Allow-Credential": true,
-      },
-    });
 
     setUser(name);
 
@@ -42,7 +31,7 @@ const Chat = ({ location }) => {
         alert(error);
       }
     });
-  }, [ENDPOINT, location.search]);
+  }, [location.search]);
 
   useEffect(() => {
     socket.on("shoutout", (newShoutout) => {
@@ -52,31 +41,8 @@ const Chat = ({ location }) => {
     socket.on('chatMessage', chatMessage => {
       setMessageList((messageList) => [...messageList, chatMessage]);
     });
-
-    // socket.on('comment', comment => {
-    //   // find shoutoutId in messageList and add comment to appropriate shoutout
-    //   console.log(comment)
-    //   console.log(messageList)
-    //   messageList.find(shoutout => shoutout.id === comment.shoutoutId)
-    //     .then(selectedShoutout => {
-    //       console.log(selectedShoutout);
-    //       return setMessageList(...messageList, {...selectedShoutout, comments: { ...selectedShoutout.comments, comment }})})
-    // });
   }, []);
 
-  useEffect(() => {
-    socket.on('comment', comment => {
-      // find shoutoutId in messageList and add comment to appropriate shoutout
-      console.log(comment)
-      console.log(messageList)
-      messageList.find(shoutout => shoutout.id === comment.shoutoutId)
-        .then(selectedShoutout => {
-          console.log(selectedShoutout);
-          return setMessageList(...messageList, {...selectedShoutout, comments: { ...selectedShoutout.comments, comment }})})
-    });
-  }, [messageList])
-  console.log(messageList)
-  
   const sendShoutout = (event) => {
     event.preventDefault();
     if (newShoutout) {
@@ -88,23 +54,11 @@ const Chat = ({ location }) => {
     }
   };
 
-  const sendReply = (event, shoutoutId) => {
-    event.preventDefault();
-    if (reply) {
-      socket.emit('sendReply', { shoutoutId, text: reply}, () => setReply(''));
-    }
-  }
-
   return (
     <div className="outerContainer">
       <div className="container">
         <Header />
-        <MessageList
-          messageList={messageList}
-          reply={reply}
-          sendReply={sendReply}
-          setReply={setReply}
-        />
+        <MessageList messageList={messageList} />
         <div className="bottomSection">
           <div id="canvasAndDogHouseContainer">
             <Canvas

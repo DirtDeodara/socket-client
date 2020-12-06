@@ -4,7 +4,7 @@ import Shoutout from '../Shoutout/Shoutout';
 import AdminMessage from '../ChatMessage/ChatMessage';
 import "./MessageList.css";
 
-const MessageList = ({ messageList, reply, sendReply, setReply }) => {
+const MessageList = ({ messageList }) => {
   return (
     <ScrollToBottom className="messageList" followButtonClassName="scrollButton">
       {messageList.map((messageItem, i) => {
@@ -14,11 +14,7 @@ const MessageList = ({ messageList, reply, sendReply, setReply }) => {
           </div>
         ) : (
             <div key={i} className="messageItem">
-              <Shoutout
-                {...messageItem}
-                reply={reply}
-                sendReply={sendReply}
-                setReply={setReply} />
+              <Shoutout {...messageItem} />
             </div>
           )
       }
