@@ -4,13 +4,13 @@ import commentIcon from "../../icons/comment-icon.svg";
 import colorFactory from "./shoutoutColors";
 import "./Shoutout.css";
 
-const ENDPOINT = "localhost:5000";
-const io = require("socket.io-client");
-const socket = io(ENDPOINT, {
-  extraHeaders: {
-    "Access-Control-Allow-Credential": true,
-  },
-});
+// const ENDPOINT = "localhost:5000";
+// const io = require("socket.io-client");
+// const socket = io(ENDPOINT, {
+//   extraHeaders: {
+//     "Access-Control-Allow-Credential": true,
+//   },
+// });
 
 const Emoji = ({ count, label = "", onClick, symbol }) => (
   <div className="emojiContainer">
@@ -30,7 +30,11 @@ const Emoji = ({ count, label = "", onClick, symbol }) => (
 const CommentContainer = ({
   comments,
   color,
-  open
+  id,
+  open,
+  reply,
+  sendReply,
+  setReply
 }) => {
   const commentElements = comments.map(({ commentAuthor, commentMessage }, i) => (
     <div className="comment" key={i}>
@@ -38,20 +42,11 @@ const CommentContainer = ({
       <p>{commentMessage}</p>
     </div>
   ));
-  const [reply, setReply] = useState("")
-
-  const sendReply = (event) => {
-    event.preventDefault();
-    if (reply) {
-      // TODO Add sendReply to server; will need a way to connect to comment
-      socket.emit('sendReply', reply, () => setReply(''));
-    }
-  }
 
   return (
     <div className={`${open ? "commentContainerOpen" : "commentContainerClosed"} shoutoutContainerPadding commentContainer`} style={{ backgroundColor: colorFactory[color].commentBackground }}>
       {commentElements}
-      <ReplyInput setMessage={setReply} sendMessage={sendReply} message={reply} buttonColor={colorFactory[color].accent} />
+      <ReplyInput setMessage={setReply} sendMessage={(e) => sendReply(e, id)} message={reply} buttonColor={colorFactory[color].accent} />
     </div>
   )
 };
@@ -60,7 +55,11 @@ const Shoutout = ({
     author,
     color,
     comments,
+    id,
     recipient,
+    reply,
+    sendReply,
+    setReply,
     text,
   }) => {
 
@@ -94,7 +93,11 @@ const Shoutout = ({
       <CommentContainer
         color={color}
         comments={comments}
+        id={id}
         open={commentsOpen}
+        reply={reply}
+        sendReply={sendReply}
+        setReply={setReply} 
       />
     </div>
   );
