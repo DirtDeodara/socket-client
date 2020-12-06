@@ -3,7 +3,7 @@ import queryString from "query-string";
 import Canvas from "../Canvas/Canvas";
 import DogHouse from "../DogHouse/DogHouse";
 import Header from "../Header/Header";
-import ShoutoutList from "../ShoutoutList/ShoutoutList";
+import MessageList from "../MessageList/MessageList";
 
 import "./Chat.css";
 
@@ -15,11 +15,12 @@ const Chat = ({ location }) => {
     author: "",
     color: "",
     comments: [],
-    message: "",
     recipient: "",
-  };
+    text: "",
+    variant: "shoutout",
+  }
   const [newShoutout, setNewShoutout] = useState(emptyShoutout);
-  const [shoutouts, setShoutouts] = useState([]);
+  const [messageList, setMessageList] = useState([]);
   // const [users, setUsers] = useState('');
   const ENDPOINT = "localhost:5000";
 
@@ -43,10 +44,14 @@ const Chat = ({ location }) => {
   }, [ENDPOINT, location.search]);
 
   useEffect(() => {
-    socket.on("shoutout", (newShoutout) => {
-      setShoutouts((shoutouts) => [...shoutouts, newShoutout]);
+    socket.on('chatMessage', chatMessage => {
+      setMessageList((messageList) => [...messageList, chatMessage]);
     });
   }, []);
+
+  socket.on('chatMessage', chatMessage => {
+    setMessageList((messageList) => [...messageList, chatMessage]);
+  });
 
   const sendShoutout = (event) => {
     event.preventDefault();
@@ -62,7 +67,7 @@ const Chat = ({ location }) => {
       <div className="header">
         <Header />
       </div>
-      <ShoutoutList shoutouts={shoutouts} />
+      <MessageList messageList={messageList} />
       <div className="bottomSection">
         <div id="canvasAndDogHouseContainer">
           <Canvas

@@ -3,7 +3,7 @@
   height: 300px;
   display: flex;
   justify-content: center;
-  padding: 50px 0;
+  padding: 40px 0;
   background-color: #0092D3;
 }
 
@@ -47,6 +47,7 @@ input:focus, textarea:focus, select:focus{
 
 .sendButton {
   border: none;
+  margin-top: 15px; /* to accomadate the error message above the inputs */
   padding: 20px 30px;
   font-size: 20px;
   color: #fff;
@@ -57,6 +58,12 @@ input:focus, textarea:focus, select:focus{
   animation: AnimationName 5s ease infinite;
   cursor: pointer;
 }
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
 @keyframes AnimationName {
 	0%   { background-position: 0% center; }
 	100% { background-position: 100% center; }
