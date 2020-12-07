@@ -7,6 +7,12 @@
   border-top: 1px solid black;
   border-bottom: 1px solid black;
   min-height: 75px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  overflow-y: hidden;
 }
 
 #drivewayLogo {
