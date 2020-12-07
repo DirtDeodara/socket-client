@@ -5,7 +5,7 @@ import commentIcon from "../../icons/comment-icon.svg";
 import colorFactory from "./shoutoutColors";
 import "./Shoutout.css";
 
-const Emoji = ({ id, label, symbol }) => {
+const Emoji = ({ id, label, symbol, handleConfetti }) => {
   const [emojiCount, setEmojiCount] = useState(0)
   const [emojiClickEnabled, setEmojiClickEnabled] = useState(true);
 
@@ -20,6 +20,12 @@ const Emoji = ({ id, label, symbol }) => {
   const disableEmojiClick = () => {
     setEmojiClickEnabled(false)
   }
+
+  useEffect(() => {
+    if(emojiCount > 1) { //We will want to change this to be a better number, but this makes it is easy to test
+      handleConfetti();
+    }
+  }, [emojiCount])
 
   const onClick = () => {
     socket.emit('incrementEmojiCount', { id, label, count: emojiCount + 1 }, disableEmojiClick);
@@ -84,6 +90,7 @@ const Shoutout = ({
   id,
   recipient,
   text,
+  handleConfetti
 }) => {
   const [commentsOpen, setCommentsOpen] = useState(false);
   const toggleCommentsOpen = () => setCommentsOpen(!commentsOpen);
@@ -103,9 +110,9 @@ const Shoutout = ({
           <h2>Shoutout to <span style={{ color: colorFactory[color].accent }}>{recipient}</span></h2>
           <p>{text}</p>
           <div className="emojiRow">
-            <Emoji id={id} label="laugh" symbol="😂" />
-            <Emoji id={id} label="love" symbol="❤️" />
-            <Emoji id={id} label="up" symbol="☝️" />
+            <Emoji id={id} label="laugh" symbol="😂" handleConfetti={handleConfetti}/> {/** currently applied to all emojis, but we could choose to have it one only one or two */}
+            <Emoji id={id} label="love" symbol="❤️" handleConfetti={handleConfetti}/>
+            <Emoji id={id} label="up" symbol="☝️" handleConfetti={handleConfetti}/>
           </div>
           <h3 className="author">{author}</h3>
         </div>
