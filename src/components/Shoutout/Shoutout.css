@@ -50,6 +50,10 @@ button, .emoji, .commentIcon {
   font-size: 25px;
 }
 
+.emoji.disabled {
+  cursor: default;
+}
+
 .emojiContainer {
   margin-right: 20px;
 }

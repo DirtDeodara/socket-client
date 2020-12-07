@@ -5,20 +5,40 @@ import commentIcon from "../../icons/comment-icon.svg";
 import colorFactory from "./shoutoutColors";
 import "./Shoutout.css";
 
-const Emoji = ({ count, label = "", onClick, symbol }) => (
+const Emoji = ({ id, label, symbol }) => {
+  const [emojiCount, setEmojiCount] = useState(0)
+  const [emojiClickEnabled, setEmojiClickEnabled] = useState(true);
+
+  useEffect(() => {
+    socket.on('emoji', emoji => {
+      if (id === emoji.id && label === emoji.label) {
+        setEmojiCount(emoji.count)
+      }
+    });
+  }, [label, id])
+
+  const disableEmojiClick = () => {
+    setEmojiClickEnabled(false)
+  }
+
+  const onClick = () => {
+    socket.emit('incrementEmojiCount', { id, label, count: emojiCount + 1 }, disableEmojiClick);
+  }
+
+  return (
   <div className="emojiContainer">
     <span
-      className="emoji"
-      onClick={onClick}
+      className={`emoji ${!emojiClickEnabled && "disabled"}`}
+      onClick={emojiClickEnabled && onClick}
       role="img"
       aria-label={label}
-      aria-hidden={label ? "false" : "true"}
+      aria-hidden={"false"}
     >
       {symbol}
     </span>
-    <span>{count}</span>
+    <span>{emojiCount > 0 && emojiCount}</span>
   </div>
-);
+)};
 
 const CommentContainer = ({
   color,
@@ -83,10 +103,9 @@ const Shoutout = ({
           <h2>Shoutout to <span style={{ color: colorFactory[color].accent }}>{recipient}</span></h2>
           <p>{text}</p>
           <div className="emojiRow">
-            {/* TODO incrememnt emoji count on click; send to back end and increase count on front end */}
-            <Emoji symbol="😂" label="laugh" count={3} onClick={() => { }} />
-            <Emoji symbol="❤️" label="love" />
-            <Emoji symbol="☝️" label="up" />
+            <Emoji id={id} label="laugh" symbol="😂" />
+            <Emoji id={id} label="love" symbol="❤️" />
+            <Emoji id={id} label="up" symbol="☝️" />
           </div>
           <h3 className="author">{author}</h3>
         </div>
