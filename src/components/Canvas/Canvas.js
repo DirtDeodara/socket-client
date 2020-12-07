@@ -55,7 +55,7 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
           </div>
         </section>
         <section className="canvas-section">
-          <button className="sendButton" onClick={e => sendShoutout(e)}>Send</button>
+          <button className="sendButton" onClick={sendShoutout}>Send</button>
         </section>
       </div>
   )

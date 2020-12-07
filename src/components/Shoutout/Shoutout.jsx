@@ -1,52 +1,74 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReplyInput from '../ReplyInput/ReplyInput';
+import { socket } from "../../utils/socket"
 import commentIcon from "../../icons/comment-icon.svg";
 import colorFactory from "./shoutoutColors";
 import "./Shoutout.css";
 
-const ENDPOINT = "localhost:5000";
-const io = require("socket.io-client");
-const socket = io(ENDPOINT, {
-  extraHeaders: {
-    "Access-Control-Allow-Credential": true,
-  },
-});
+const Emoji = ({ id, label, symbol }) => {
+  const [emojiCount, setEmojiCount] = useState(0)
+  const [emojiClickEnabled, setEmojiClickEnabled] = useState(true);
 
-const Emoji = ({ count, label = "", onClick, symbol }) => (
+  useEffect(() => {
+    socket.on('emoji', emoji => {
+      if (id === emoji.id && label === emoji.label) {
+        setEmojiCount(emoji.count)
+      }
+    });
+  }, [label, id])
+
+  const disableEmojiClick = () => {
+    setEmojiClickEnabled(false)
+  }
+
+  const onClick = () => {
+    socket.emit('incrementEmojiCount', { id, label, count: emojiCount + 1 }, disableEmojiClick);
+  }
+
+  return (
   <div className="emojiContainer">
     <span
-      className="emoji"
-      onClick={onClick}
+      className={`emoji ${!emojiClickEnabled && "disabled"}`}
+      onClick={emojiClickEnabled && onClick}
       role="img"
       aria-label={label}
-      aria-hidden={label ? "false" : "true"}
+      aria-hidden={"false"}
     >
       {symbol}
     </span>
-    <span>{count}</span>
+    <span>{emojiCount > 0 && emojiCount}</span>
   </div>
-);
+)};
 
 const CommentContainer = ({
-  comments,
   color,
-  open
+  id,
+  open,
 }) => {
-  const commentElements = comments.map(({ commentAuthor, commentMessage }, i) => (
+  const [reply, setReply] = useState("");
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    socket.on('comment', comment => {
+      if (id === comment.id) {
+        setComments([...comments, comment])
+      }
+    });
+  }, [comments, id])
+
+  const sendReply = (event) => {
+    event.preventDefault();
+    if (reply) {
+      socket.emit('sendReply', { id, text: reply }, () => setReply(''));
+    }
+  }
+
+  const commentElements = comments.map(({ user: commentAuthor, text: commentMessage }, i) => (
     <div className="comment" key={i}>
       <h3>{commentAuthor}</h3>
       <p>{commentMessage}</p>
     </div>
   ));
-  const [reply, setReply] = useState("")
-
-  const sendReply = (event) => {
-    event.preventDefault();
-    if (reply) {
-      // TODO Add sendReply to server; will need a way to connect to comment
-      socket.emit('sendReply', reply, () => setReply(''));
-    }
-  }
 
   return (
     <div className={`${open ? "commentContainerOpen" : "commentContainerClosed"} shoutoutContainerPadding commentContainer`} style={{ backgroundColor: colorFactory[color].commentBackground }}>
@@ -57,15 +79,13 @@ const CommentContainer = ({
 };
 
 const Shoutout = ({
-    author,
-    color,
-    comments,
-    recipient,
-    text,
-  }) => {
-
+  author,
+  color,
+  id,
+  recipient,
+  text,
+}) => {
   const [commentsOpen, setCommentsOpen] = useState(false);
-
   const toggleCommentsOpen = () => setCommentsOpen(!commentsOpen);
 
   return (
@@ -83,17 +103,16 @@ const Shoutout = ({
           <h2>Shoutout to <span style={{ color: colorFactory[color].accent }}>{recipient}</span></h2>
           <p>{text}</p>
           <div className="emojiRow">
-            {/* TODO onClick and count should come from socket.io? */}
-            <Emoji symbol="😂" label="laugh" count={3} onClick={() => { }} />
-            <Emoji symbol="❤️" label="love" />
-            <Emoji symbol="☝️" label="up" />
+            <Emoji id={id} label="laugh" symbol="😂" />
+            <Emoji id={id} label="love" symbol="❤️" />
+            <Emoji id={id} label="up" symbol="☝️" />
           </div>
           <h3 className="author">{author}</h3>
         </div>
       </div>
       <CommentContainer
         color={color}
-        comments={comments}
+        id={id}
         open={commentsOpen}
       />
     </div>
