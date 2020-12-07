@@ -54,26 +54,24 @@ const Chat = ({ location }) => {
   const sendShoutout = (event) => {
     event.preventDefault();
     if (newShoutout) {
-      socket.emit("sendShoutout", { ...newShoutout, author: user }, () =>
-        setNewShoutout(emptyShoutout)
-      );
+      socket.emit("sendShoutout", { ...newShoutout, author: user }, () => setNewShoutout(emptyShoutout));
     }
   };
 
   return (
-    <div className="container">
-      <div className="header">
+    <div className="outerContainer">
+      <div className="container">
         <Header />
-      </div>
-      <MessageList messageList={messageList} />
-      <div className="bottomSection">
-        <div id="canvasAndDogHouseContainer">
-          <Canvas
-            newShoutout={newShoutout}
-            setNewShoutout={setNewShoutout}
-            sendShoutout={sendShoutout}
-          />
-          <DogHouse />
+        <MessageList messageList={messageList} />
+        <div className="bottomSection">
+          <div id="canvasAndDogHouseContainer">
+            <Canvas
+              newShoutout={newShoutout}
+              sendShoutout={sendShoutout}
+              setNewShoutout={setNewShoutout}
+            />
+            <DogHouse />
+          </div>
         </div>
       </div>
     </div>
