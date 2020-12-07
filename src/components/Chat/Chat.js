@@ -42,6 +42,10 @@ const Chat = ({ location }) => {
   }, [ENDPOINT, location.search]);
 
   useEffect(() => {
+    socket.on("shoutout", (newShoutout) => {
+      setMessageList((messageList) => [...messageList, newShoutout]);
+    });
+
     socket.on('chatMessage', chatMessage => {
       setMessageList((messageList) => [...messageList, chatMessage]);
     });
