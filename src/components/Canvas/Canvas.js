@@ -33,12 +33,12 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
               value={color}
             >
               <option>BG color</option>
-              <option value="yellow">Yellow</option>
-              <option value="pink">Pink</option>
-              <option value="orange">Orange</option>
-              <option value="blue">Blue</option>
-              <option value="green">Green</option>
               <option value="purple">Purple</option>
+              <option value="darkOrange">Dark Orange</option>
+              <option value="orange">Orange</option>
+              <option value="yellow">Yellow</option>
+              <option value="lightBlue">Light Blue</option>
+              <option value="blue">Blue</option>
             </select>
           </div>
           <div>
