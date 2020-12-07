@@ -4,14 +4,16 @@
   position: relative;
   align-items: center;
   background-color: white;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
   min-height: 75px;
+  overflow-y: hidden;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 10;
+  -webkit-box-shadow: 0px 1px 9px 0px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: 0px 1px 9px 0px rgba(50, 50, 50, 0.75);
+  box-shadow: 0px 1px 9px 0px rgba(50, 50, 50, 0.75);
 }
 
 #drivewayLogo {
