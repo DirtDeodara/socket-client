@@ -4,7 +4,6 @@ import Canvas from "../Canvas/Canvas";
 import DogHouse from "../DogHouse/DogHouse";
 import Header from "../Header/Header";
 import MessageList from "../MessageList/MessageList";
-
 import "./Chat.css";
 
 let socket;
@@ -21,7 +20,6 @@ const Chat = ({ location }) => {
   }
   const [newShoutout, setNewShoutout] = useState(emptyShoutout);
   const [messageList, setMessageList] = useState([]);
-  // const [users, setUsers] = useState('');
   const ENDPOINT = "localhost:5000";
 
   useEffect(() => {
@@ -48,10 +46,6 @@ const Chat = ({ location }) => {
       setMessageList((messageList) => [...messageList, chatMessage]);
     });
   }, []);
-
-  socket.on('chatMessage', chatMessage => {
-    setMessageList((messageList) => [...messageList, chatMessage]);
-  });
 
   const sendShoutout = (event) => {
     event.preventDefault();
