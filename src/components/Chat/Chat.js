@@ -1,36 +1,28 @@
 import React, { useState, useEffect } from "react";
 import queryString from "query-string";
+import { v4 as uuidv4 } from 'uuid';
 import Canvas from "../Canvas/Canvas";
 import DogHouse from "../DogHouse/DogHouse";
 import Header from "../Header/Header";
 import MessageList from "../MessageList/MessageList";
+import { socket } from "../../utils/socket"
 import "./Chat.css";
-
-let socket;
 
 const Chat = ({ location }) => {
   const [user, setUser] = useState("");
   const emptyShoutout = {
     author: "",
     color: "",
-    comments: [],
+    id: "",
     recipient: "",
     text: "",
     variant: "shoutout",
   }
   const [newShoutout, setNewShoutout] = useState(emptyShoutout);
   const [messageList, setMessageList] = useState([]);
-  const ENDPOINT = "localhost:5000";
 
   useEffect(() => {
     const { name } = queryString.parse(location.search);
-
-    const io = require("socket.io-client");
-    socket = io(ENDPOINT, {
-      extraHeaders: {
-        "Access-Control-Allow-Credential": true,
-      },
-    });
 
     setUser(name);
 
@@ -39,7 +31,7 @@ const Chat = ({ location }) => {
         alert(error);
       }
     });
-  }, [ENDPOINT, location.search]);
+  }, [location.search]);
 
   useEffect(() => {
     socket.on("shoutout", (newShoutout) => {
@@ -54,7 +46,11 @@ const Chat = ({ location }) => {
   const sendShoutout = (event) => {
     event.preventDefault();
     if (newShoutout) {
-      socket.emit("sendShoutout", { ...newShoutout, author: user }, () => setNewShoutout(emptyShoutout));
+      socket.emit("sendShoutout", {
+        ...newShoutout,
+        author: user,
+        id: uuidv4()
+      }, () => setNewShoutout(emptyShoutout));
     }
   };
 
