@@ -79,7 +79,7 @@ const CommentContainer = ({
   }
 
   useEffect(() => {
-    localStorage.setItem(`${id}comments`, JSON.stringify(comments));
+    localStorage.setItem(`${id}Comments`, JSON.stringify(comments));
   }, [comments]);
 
   const commentElements = comments.map(({ user: commentAuthor, text: commentMessage }, i) => (
