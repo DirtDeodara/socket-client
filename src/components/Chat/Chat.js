@@ -19,7 +19,13 @@ const Chat = ({ location }) => {
     variant: "shoutout",
   }
   const [newShoutout, setNewShoutout] = useState(emptyShoutout);
-  const [messageList, setMessageList] = useState([]);
+  const [messageList, setMessageList] = useState(() => {
+    const storedMessageList = localStorage.getItem('storedMessages')
+
+    return storedMessageList !== null
+      ? JSON.parse(storedMessageList)
+      : []
+  });
 
   useEffect(() => {
     const { name } = queryString.parse(location.search);
@@ -40,8 +46,13 @@ const Chat = ({ location }) => {
 
     socket.on('chatMessage', chatMessage => {
       setMessageList((messageList) => [...messageList, chatMessage]);
+      localStorage.setItem('messages', messageList);
     });
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('storedMessages', JSON.stringify(messageList));
+  }, [messageList]);
 
   const sendShoutout = (event) => {
     event.preventDefault();
