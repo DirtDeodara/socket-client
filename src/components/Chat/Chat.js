@@ -17,7 +17,8 @@ const Chat = ({ location }) => {
     recipient: "",
     text: "",
     variant: "shoutout",
-  }
+  };
+
   const [newShoutout, setNewShoutout] = useState(emptyShoutout);
   const [messageList, setMessageList] = useState(() => {
     const storedMessageList = localStorage.getItem('storedMessages')
@@ -46,7 +47,6 @@ const Chat = ({ location }) => {
 
     socket.on('chatMessage', chatMessage => {
       setMessageList((messageList) => [...messageList, chatMessage]);
-      localStorage.setItem('messages', messageList);
     });
   }, []);
 
