@@ -85,7 +85,6 @@ h3 {
   transform: translateY(-100%);
   opacity: 0;
   transition: .7s ease-in-out;
-  margin-top: 20px;
 }
 
 .commentContainerOpen {
