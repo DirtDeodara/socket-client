@@ -41,18 +41,16 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
               <option value="blue">Blue</option>
             </select>
           </div>
-          <div>
-            <textarea
-              id="message-body"
-              className="input"
-              rows="5"
-              placeholder="Type a message..."
-              name="text"
-              value={text}
-              onChange={handleInputChange}
-              onKeyPress={event => event.key === 'Enter' ? sendShoutout(event) : null}
-            />
-          </div>
+          <textarea
+            id="message-body"
+            className="input"
+            rows="3"
+            placeholder="Type a message..."
+            name="text"
+            value={text}
+            onChange={handleInputChange}
+            onKeyPress={event => event.key === 'Enter' ? sendShoutout(event) : null}
+          />
         </section>
         <section className="canvas-section">
           <button className="sendButton" onClick={sendShoutout}>Send</button>
