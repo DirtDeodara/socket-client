@@ -18,5 +18,7 @@
 }
 
 #canvasAndDogHouseContainer {
+  background-color: #0092d3;
   display: flex;
+  height: 175px;
 }
