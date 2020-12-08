@@ -29,17 +29,14 @@ const Chat = ({ location }) => {
     setShouldDropConfetti(true);
     setTimeout(() => {
       setShouldDropConfetti(false);
-    },5000); //this time can be adjusted, but it seems about right to account for the confetti "falling off the screen"
-  }
-    
+    }, 5000); //this time can be adjusted, but it seems about right to account for the confetti "falling off the screen"
+  };
 
   const [newShoutout, setNewShoutout] = useState(emptyShoutout);
   const [messageList, setMessageList] = useState(() => {
-    const storedMessageList = localStorage.getItem('storedMessages')
+    const storedMessageList = localStorage.getItem("storedMessages");
 
-    return storedMessageList !== null
-      ? JSON.parse(storedMessageList)
-      : []
+    return storedMessageList !== null ? JSON.parse(storedMessageList) : [];
   });
 
   useEffect(() => {
@@ -65,7 +62,7 @@ const Chat = ({ location }) => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('storedMessages', JSON.stringify(messageList));
+    localStorage.setItem("storedMessages", JSON.stringify(messageList));
   }, [messageList]);
 
   const sendShoutout = (event) => {
@@ -84,7 +81,7 @@ const Chat = ({ location }) => {
   };
 
   return (
-    <div className="outerContainer">
+    <>
       <div
         style={{
           position: "absolute",
@@ -94,18 +91,23 @@ const Chat = ({ location }) => {
           height: "100%",
         }}
       >
-        {shouldDropConfetti && <Confetti
-          run={shouldDropConfetti}
-          gravity={0.2}
-          numberOfPieces={2000}
-          width={width}
-          height={height}
-          recycle={false}
-        />}
+        {shouldDropConfetti && (
+          <Confetti
+            run={shouldDropConfetti}
+            gravity={0.2}
+            numberOfPieces={2000}
+            width={width}
+            height={height}
+            recycle={false}
+          />
+        )}
       </div>
       <div className="container">
         <Header />
-        <MessageList messageList={messageList} handleConfetti={toggleConfetti}/>
+        <MessageList
+          messageList={messageList}
+          handleConfetti={toggleConfetti}
+        />
         <div className="bottomSection">
           <div id="canvasAndDogHouseContainer">
             <Canvas
@@ -117,7 +119,7 @@ const Chat = ({ location }) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

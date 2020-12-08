@@ -6,12 +6,6 @@ import "./MessageList.css";
 
 const MessageList = ({ messageList, handleConfetti }) => {
 
-  useEffect(() => { //this is a "fix" for the list not scrolling properly. i couldnt figure out how to fix the ScrollToBottom component to work properly
-    window.scrollTo(({
-      top: document.body.scrollHeight,
-      behavior: 'smooth',
-    }));
-  }, [messageList])
 
   return (
     <ScrollToBottom checkInterval={200} className="messageList" followButtonClassName="scrollButton">

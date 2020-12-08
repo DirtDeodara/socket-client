@@ -31,7 +31,7 @@ const Emoji = ({ id, label, symbol, handleConfetti }) => {
   }
 
   useEffect(() => {
-    if(emojiCount > 1) { //We will want to change this to be a better number, but this makes it is easy to test
+    if(emojiCount === 1) { //We will want to change this to be a better number, but this makes it is easy to test
       handleConfetti();
     }
   }, [emojiCount])
