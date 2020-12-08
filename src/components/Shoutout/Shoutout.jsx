@@ -6,7 +6,12 @@ import colorFactory from "./shoutoutColors";
 import "./Shoutout.css";
 
 const Emoji = ({ id, label, symbol, handleConfetti }) => {
-  const [emojiCount, setEmojiCount] = useState(0)
+  const [emojiCount, setEmojiCount] = useState(() => {
+    const storedCount = localStorage.getItem(`${id}${label}Count`);
+    return storedCount !== null
+      ? JSON.parse(storedCount)
+      : 0
+  });
   const [emojiClickEnabled, setEmojiClickEnabled] = useState(true);
 
   useEffect(() => {
@@ -15,7 +20,11 @@ const Emoji = ({ id, label, symbol, handleConfetti }) => {
         setEmojiCount(emoji.count)
       }
     });
-  }, [label, id])
+  }, [label, id]);
+
+  useEffect(() => {
+    localStorage.setItem((`${id}${label}Count`), JSON.stringify(emojiCount));
+  }, [emojiCount]);
 
   const disableEmojiClick = () => {
     setEmojiClickEnabled(false)
@@ -52,7 +61,13 @@ const CommentContainer = ({
   open,
 }) => {
   const [reply, setReply] = useState("");
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState(() => {
+    const storedCommentList = localStorage.getItem(`${id}Comments`);
+
+    return storedCommentList !== null
+      ? JSON.parse(storedCommentList)
+      : []
+  });
 
   useEffect(() => {
     socket.on('comment', comment => {
@@ -68,6 +83,10 @@ const CommentContainer = ({
       socket.emit('sendReply', { id, text: reply }, () => setReply(''));
     }
   }
+
+  useEffect(() => {
+    localStorage.setItem(`${id}Comments`, JSON.stringify(comments));
+  }, [comments]);
 
   const commentElements = comments.map(({ user: commentAuthor, text: commentMessage }, i) => (
     <div className="comment" key={i}>

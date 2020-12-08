@@ -19,8 +19,7 @@ const Chat = ({ location }) => {
     text: "",
     variant: "shoutout",
   };
-  const [newShoutout, setNewShoutout] = useState(emptyShoutout);
-  const [messageList, setMessageList] = useState([]);
+
   const [shouldDropConfetti, setShouldDropConfetti] = useState(false);
 
   const height = window.innerHeight;
@@ -33,6 +32,15 @@ const Chat = ({ location }) => {
     },5000); //this time can be adjusted, but it seems about right to account for the confetti "falling off the screen"
   }
     
+
+  const [newShoutout, setNewShoutout] = useState(emptyShoutout);
+  const [messageList, setMessageList] = useState(() => {
+    const storedMessageList = localStorage.getItem('storedMessages')
+
+    return storedMessageList !== null
+      ? JSON.parse(storedMessageList)
+      : []
+  });
 
   useEffect(() => {
     const { name } = queryString.parse(location.search);
@@ -55,6 +63,10 @@ const Chat = ({ location }) => {
       setMessageList((messageList) => [...messageList, chatMessage]);
     });
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('storedMessages', JSON.stringify(messageList));
+  }, [messageList]);
 
   const sendShoutout = (event) => {
     event.preventDefault();
