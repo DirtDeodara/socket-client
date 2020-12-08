@@ -24,7 +24,8 @@ button, .emoji, .commentIcon {
 }
 
 .shoutoutOuterContainer {
-  margin: 30px 100px -85px
+  margin: 30px 100px -85px;
+  overflow: hidden;
 }
 
 .shoutoutContainer {
@@ -82,6 +83,7 @@ h3 {
 
 .commentContainerClosed {
   transform: translateY(-100%);
+  opacity: 0;
   transition: .7s ease-in-out;
 }
 
