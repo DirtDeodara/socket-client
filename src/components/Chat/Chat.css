@@ -21,4 +21,11 @@
   background-color: rgba(50, 146, 210, 0.8);
   display: flex;
   height: 175px;
+  padding: 0 100px;
+}
+
+@media (max-width: 767px) {
+  #canvasAndDogHouseContainer {
+    padding: 0 20px;
+  }
 }

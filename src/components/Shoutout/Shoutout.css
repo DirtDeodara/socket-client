@@ -109,3 +109,17 @@ h3 {
 .largeBottomMargin {
   margin-bottom: 400px;
 }
+
+@media (max-width: 767px) {
+  .shoutoutOuterContainer {
+    margin: 20px 20px;
+  }
+  .shoutoutContainerPadding {
+    padding: 20px 20px;
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+}
+
