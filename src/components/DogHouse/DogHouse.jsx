@@ -20,7 +20,7 @@ const DogHouse = () => {
   return (
     <div id="dogHouseContainer">
       <button id="dogHouseBtn" onClick={showDog}>
-        <img id="dogHouse" src={doghouse} alt="dog house" hidden={showBtn} />
+        <img id="dogHouse" src={doghouse} alt="dog house" title="take a trip to the Driveway Dog House!" hidden={showBtn} />
       </button>
       <img
         id="dogImage"

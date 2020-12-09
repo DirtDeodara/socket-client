@@ -35,42 +35,79 @@ const colorFactory = {
     //   commentBackground: "#e4d01e",
     //   accent: "#7c13b1"
     // }
-    purple: {
-      mainBackground: "#751A33",
+    red: {
+      mainBackground: "#C13A5F",
       text: "white",
-      commentBackground: "#1A3375",
-      accent: "#33751A"
-    },
-    darkOrange: {
-      mainBackground: "#B34233",
-      text: "white",
-      commentBackground: "#4233B3",
-      accent: "#33B342"
+      commentBackground: "#751A33",
+      accent: "white"
     },
     orange: {
-      mainBackground: "#D28F33",
-      text: "#333333",
-      commentBackground: "#D23F33",
-      accent: "#C6D233"
+      mainBackground: "#E36655",
+      text: "white",
+      commentBackground: "#B34233",
+      accent: "white"
     },
     yellow: {
-      mainBackground: "#D4B95E",
+      mainBackground: "#f0a741",
       text: "#333333",
-      commentBackground: "#CC6741",
-      accent: "#809f2b"
+      commentBackground: "#D28F33",
+      accent: "#333333"
     },
-    lightBlue: {
-      mainBackground: "#4EA2A2",
+    green: {
+      mainBackground: "#43bf61",
       text: "#333333",
-      commentBackground: "#7C227C",
-      accent: "#C9C927"
+      commentBackground: "#2B8B43",
+      accent: "#333333"
     },
     blue: {
-      mainBackground: "#1A8693",
+      mainBackground: "#29b1c2",
+      text: "#333333",
+      commentBackground: "#1A8693",
+      accent: "#333333"
+    },
+    purple: {
+      mainBackground: "#BC46BC",
       text: "white",
-      commentBackground: "#A2A24E",
-      accent: "#7C227C"
+      commentBackground: "#7C227C",
+      accent: "white"
     }
   };
 
   export default colorFactory;
+
+  // purple: {
+  //   mainBackground: "#751A33",
+  //   text: "white",
+  //   commentBackground: "#1A3375",
+  //   accent: "#33751A"
+  // },
+  // darkOrange: {
+  //   mainBackground: "#B34233",
+  //   text: "white",
+  //   commentBackground: "#4233B3",
+  //   accent: "#33B342"
+  // },
+  // orange: {
+  //   mainBackground: "#D28F33",
+  //   text: "#333333",
+  //   commentBackground: "#D23F33",
+  //   accent: "#C6D233"
+  // },
+  // yellow: {
+  //   mainBackground: "#D4B95E",
+  //   text: "#333333",
+  //   commentBackground: "#CC6741",
+  //   accent: "#809f2b"
+  // },
+  // lightBlue: {
+  //   mainBackground: "#4EA2A2",
+  //   text: "#333333",
+  //   commentBackground: "#7C227C",
+  //   accent: "#C9C927"
+  // },
+  // blue: {
+  //   mainBackground: "#1A8693",
+  //   text: "white",
+  //   commentBackground: "#A2A24E",
+  //   accent: "#7C227C"
+  // }

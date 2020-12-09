@@ -92,7 +92,7 @@ const CommentContainer = ({
     <div className="comment" key={i}>
       <h3>{commentAuthor}</h3>
       <p>{commentMessage}</p>
-      <hr/>
+      <hr style={{border: "2px dashed", borderColor: colorFactory[color].mainBackground, borderRadius: 5}} />
     </div>
   ));
 
@@ -127,8 +127,9 @@ const Shoutout = ({
             onClick={toggleCommentsOpen}
             width="30px"
           />
-          <h2>Shoutout to <span style={{ color: colorFactory[color].accent }}>{recipient}</span></h2>
-          <p>{text}</p>
+          <h2>Shoutout to <span style={{ color: colorFactory[color].accent, fontFamily: "Kalam, sans-serif", fontSize: 30, fontWeight: 400
+ }}>{recipient}</span></h2>
+          <p className="shoutoutMessage">{text}</p>
           <div className="emojiRow">
             <Emoji id={id} label="laugh" symbol="😂" handleConfetti={handleConfetti}/> {/** currently applied to all emojis, but we could choose to have it one only one or two */}
             <Emoji id={id} label="love" symbol="❤️" handleConfetti={handleConfetti}/>
