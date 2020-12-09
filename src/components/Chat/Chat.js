@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import queryString from "query-string";
 import { v4 as uuidv4 } from "uuid";
 import Canvas from "../Canvas/Canvas";
 import DogHouse from "../DogHouse/DogHouse";
@@ -54,7 +53,7 @@ const Chat = () => {
         alert(error);
       }
     });
-  }, []);
+  }, [code]);
 
   useEffect(() => {
     socket.on("shoutout", (newShoutout) => {
