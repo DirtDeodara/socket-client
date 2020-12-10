@@ -1,47 +1,45 @@
 .canvas-container {
   width: 100%;
-  height: 300px;
+  flex: 5;
   display: flex;
   justify-content: center;
-  padding: 40px 0;
-  background-color: #0092d3;
+  align-items: center;
 }
 
 #msg-form {
-  width: 50%;
+  width: 80%;
   margin-right: 20px;
+  max-width: 900px;
 }
 
-.msg-options {
-  margin-bottom: 10px;
-}
-
-#recipient-input {
-
-  width: 60%;
-  margin-right: 8px;
-
+.recipient-input-container {
+  flex: 2;
+  margin-right: 50px;
 }
 
 .input {
   border: none;
   border-radius: 3px;
   padding: 10px;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .msg-options {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 #message-body {
   width: 100%;
   font-family: "Arial";
+  height: 120px;
 }
 
-#color-input {
-  width: 40%;
+.color-input-container {
+  flex: 1;
+  margin-right: 50px;
 }
 
 input:focus,
@@ -52,6 +50,7 @@ select:focus {
 
 .sendButton {
   border: none;
+  border-radius: 3px;
   margin-top: 7px;
   padding: 12px 40px;
   font-size: 20px;
@@ -94,8 +93,3 @@ select:focus {
   }
 }
 
-/* @media (max-width: 767px) {
-  .sendButton {
-    padding: 10px 15px;
-  }
-} */

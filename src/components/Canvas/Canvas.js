@@ -23,7 +23,7 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
         message: "Give name to the hero!",
       });
     }
-    if (!color || color === "Background Color") {
+    if (!color || color === "Color") {
       setColorError({ isError: true, message: "Let's make it POP!" });
     }
     if (!message) {
@@ -33,7 +33,7 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
       });
     }
 
-    if (!recipient || !color ||  color === "Background Color" || !message) {
+    if (!recipient || !color ||  color === "Color" || !message) {
       return;
     } else {
       setRecipientError(errorBaseState);
@@ -47,11 +47,10 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
     <div className="canvas-container">
       <section className="canvas-section" id="msg-form">
         <div className="msg-options">
-          <div className="flex-column">
+          <div className="flex-column recipient-input-container">
             <span className="errorMessage" >{recipientError.message}</span>
             <input
               id="recipient-input"
-              // style={recipientError.isError ? { border: "3px solid red" } : null}
               className="input"
               name="recipient"
               type="text"
@@ -68,12 +67,11 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
               }}
             />
           </div>
-          <div className="flex-column">
+          <div className="flex-column color-input-container">
             <span className="errorMessage" >{colorError.message}</span>
             <select
               className="input"
               id="color-input"
-              // style={colorError.isError ? { border: "3px solid red" } : null}
               name="color"
               onChange={handleInputChange}
               value={color}
@@ -84,7 +82,7 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
                 } : errorBaseState);
               }}
             >
-              <option>Background Color</option>
+              <option>Color</option>
 
               <option value="red">Red</option>
               <option value="orange">Orange</option>
@@ -98,18 +96,16 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
         <button
           className="sendButton"
           onClick={handleClick}
-          // disabled={disabled}
         >
           Send
         </button>
         </div>
         </div>
         <div className="flex-column">
-          <span className="errorMessage" >{messageError.message}</span>
+        <span className="errorMessage" >{messageError.message}</span>
           <textarea
             id="message-body"
             className="input"
-            // style={messageError.isError ? { border: "3px solid red" } : null}
             rows="5"
             placeholder="Type a message..."
             name="message"
@@ -129,9 +125,6 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
             }}
           />
         </div>
-      </section>
-      <section className="canvas-section">
-       
       </section>
     </div>
   );
