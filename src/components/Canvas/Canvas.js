@@ -1,9 +1,12 @@
-import React from 'react';
-import './Canvas.css';
+import React, { useState } from "react";
+import "./Canvas.css";
 
 const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
-  
-  const { color, recipient, text } = newShoutout;
+  const { recipient, color, message } = newShoutout;
+  const errorBaseState = { isError: false, message: "" };
+  const [recipientError, setRecipientError] = useState(errorBaseState);
+  const [colorError, setColorError] = useState(errorBaseState);
+  const [messageError, setMessageError] = useState(errorBaseState);
 
   const handleInputChange = (e) => {
     setNewShoutout({
@@ -12,27 +15,76 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
     });
   };
 
+  const handleClick = (e) => {
+    console.log(color)
+    if (!recipient) {
+      setRecipientError({
+        isError: true,
+        message: "Give name to the hero!",
+      });
+    }
+    if (!color || color === "Background Color") {
+      setColorError({ isError: true, message: "Let's make it POP!" });
+    }
+    if (!message) {
+      setMessageError({
+        isError: true,
+        message: "Don't toy with our hearts. Let the good vibes roll!",
+      });
+    }
+
+    if (!recipient || !color ||  color === "Background Color" || !message) {
+      return;
+    } else {
+      setRecipientError(errorBaseState);
+      setColorError(errorBaseState);
+      setMessageError(errorBaseState);
+      sendShoutout(e);
+    }
+  };
+
   return (
-      <div className="canvas-container">
-        <section className="canvas-section" id="msg-form">
-          <div className="msg-options">
+    <div className="canvas-container">
+      <section className="canvas-section" id="msg-form">
+        <div className="msg-options">
+          <div className="flex-column">
+            <span className="errorMessage" >{recipientError.message}</span>
             <input
               id="recipient-input"
+              // style={recipientError.isError ? { border: "3px solid red" } : null}
               className="input"
               name="recipient"
               type="text"
               value={recipient}
               placeholder="Shoutout to..."
               onChange={handleInputChange}
+              onBlur={() => {
+                setRecipientError(
+                  !recipient ? {
+                    isError: true,
+                    message: "Give name to the hero!",
+                  } : errorBaseState
+                );
+              }}
             />
+          </div>
+          <div className="flex-column">
+            <span className="errorMessage" >{colorError.message}</span>
             <select
               className="input"
               id="color-input"
+              // style={colorError.isError ? { border: "3px solid red" } : null}
               name="color"
               onChange={handleInputChange}
               value={color}
+              onBlur={() => {
+                setColorError(!color ? {
+                  isError: true,
+                  message: "Let's make it POP!",
+                } : errorBaseState);
+              }}
             >
-              <option>BG color</option>
+              <option>Background Color</option>
               <option value="purple">Purple</option>
               <option value="darkOrange">Dark Orange</option>
               <option value="orange">Orange</option>
@@ -41,22 +93,47 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
               <option value="blue">Blue</option>
             </select>
           </div>
+        <div className="flex-column">
+        <button
+          className="sendButton"
+          onClick={handleClick}
+          // disabled={disabled}
+        >
+          Send
+        </button>
+        </div>
+        </div>
+        <div className="flex-column">
+          <span className="errorMessage" >{messageError.message}</span>
           <textarea
             id="message-body"
             className="input"
-            rows="3"
+            // style={messageError.isError ? { border: "3px solid red" } : null}
+            rows="5"
             placeholder="Type a message..."
-            name="text"
-            value={text}
+            name="message"
+            value={message}
             onChange={handleInputChange}
-            onKeyPress={event => event.key === 'Enter' ? sendShoutout(event) : null}
+            onKeyPress={(event) =>
+              event.key === "Enter" ? sendShoutout(event) : null
+            }
+            onBlur={() => {
+              setMessageError(
+                !message
+                  ? {
+                    isError: true,
+                    message: "Let everyone know who your praising!",
+                  } : errorBaseState
+              );
+            }}
           />
-        </section>
-        <section className="canvas-section">
-          <button className="sendButton" onClick={sendShoutout}>Send</button>
-        </section>
-      </div>
-  )
-}
+        </div>
+      </section>
+      <section className="canvas-section">
+       
+      </section>
+    </div>
+  );
+};
 
 export default Canvas;

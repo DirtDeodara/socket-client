@@ -16,7 +16,7 @@ const Chat = ({ location }) => {
     color: "",
     id: "",
     recipient: "",
-    text: "",
+    message: "",
     variant: "shoutout",
   };
 
