@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReplyInput from '../ReplyInput/ReplyInput';
 import { socket } from "../../utils/socket"
-import commentIcon from "../../icons/comment-icon.svg";
+import {ReactComponent as CommentIcon} from "../../icons/comment-icon.svg";
 import colorFactory from "./shoutoutColors";
 import "./Shoutout.css";
 
@@ -31,7 +31,7 @@ const Emoji = ({ id, label, symbol, handleConfetti }) => {
   }
 
   useEffect(() => {
-    if(emojiCount === 1) { //We will want to change this to be a better number, but this makes it is easy to test
+    if(emojiCount === 2) { //We will want to change this to be a better number, but this makes it is easy to test
       handleConfetti();
     }
   }, [emojiCount])
@@ -92,6 +92,7 @@ const CommentContainer = ({
     <div className="comment" key={i}>
       <h3>{commentAuthor}</h3>
       <p>{commentMessage}</p>
+      <hr style={{border: "2px dashed", borderColor: colorFactory[color].mainBackground, borderRadius: 5}} />
     </div>
   ));
 
@@ -119,15 +120,16 @@ const Shoutout = ({
       <div
         className={`${commentsOpen ? "flattenedBottomCorners" : "curvedBottomCorners"} shoutoutContainer`} style={{ backgroundColor: colorFactory[color].mainBackground, color: colorFactory[color].text }}>
         <div className="shoutoutContainerPadding">
-          <img
+          <CommentIcon
             alt="comment"
             className={`${commentsOpen ? "commentIconOpen" : "commentIconClosed"} commentIcon`}
-            color="white"
+            fill={colorFactory[color].text}
             onClick={toggleCommentsOpen}
-            src={commentIcon}
+            width="30px"
           />
-          <h2>Shoutout to <span style={{ color: colorFactory[color].accent }}>{recipient}</span></h2>
-          <p>{text}</p>
+          <h2>Shoutout to <span style={{ color: colorFactory[color].accent, fontFamily: "Kalam, sans-serif", fontSize: 30, fontWeight: 400
+ }}>{recipient}</span></h2>
+          <p className="shoutoutMessage">{text}</p>
           <div className="emojiRow">
             <Emoji id={id} label="laugh" symbol="😂" handleConfetti={handleConfetti}/> {/** currently applied to all emojis, but we could choose to have it one only one or two */}
             <Emoji id={id} label="love" symbol="❤️" handleConfetti={handleConfetti}/>
