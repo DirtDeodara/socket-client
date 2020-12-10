@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Canvas.css";
 
 const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
-  const { recipient, color, message } = newShoutout;
+  const { recipient, color, text } = newShoutout;
   const errorBaseState = { isError: false, message: "" };
   const [recipientError, setRecipientError] = useState(errorBaseState);
   const [colorError, setColorError] = useState(errorBaseState);
@@ -16,7 +16,6 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
   };
 
   const handleClick = (e) => {
-    console.log(color)
     if (!recipient) {
       setRecipientError({
         isError: true,
@@ -26,14 +25,14 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
     if (!color || color === "Color") {
       setColorError({ isError: true, message: "Let's make it POP!" });
     }
-    if (!message) {
+    if (!text) {
       setMessageError({
         isError: true,
         message: "Don't toy with our hearts. Let the good vibes roll!",
       });
     }
 
-    if (!recipient || !color ||  color === "Color" || !message) {
+    if (!recipient || !color || color === "Color" || !text) {
       return;
     } else {
       setRecipientError(errorBaseState);
@@ -92,31 +91,31 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
               <option value="purple">Purple</option>
             </select>
           </div>
-        <div className="flex-column">
-        <button
-          className="sendButton"
-          onClick={handleClick}
-        >
-          Send
+          <div className="flex-column">
+            <button
+              className="sendButton"
+              onClick={handleClick}
+            >
+              Send
         </button>
-        </div>
+          </div>
         </div>
         <div className="flex-column">
-        <span className="errorMessage" >{messageError.message}</span>
+          <span className="errorMessage">{messageError.message}</span>
           <textarea
             id="message-body"
             className="input"
-            rows="5"
+            rows="4"
             placeholder="Type a message..."
-            name="message"
-            value={message}
+            name="text"
+            value={text}
             onChange={handleInputChange}
             onKeyPress={(event) =>
               event.key === "Enter" ? sendShoutout(event) : null
             }
             onBlur={() => {
               setMessageError(
-                !message
+                !text
                   ? {
                     isError: true,
                     message: "Let everyone know who your praising!",
