@@ -17,7 +17,7 @@ const Chat = () => {
     color: "",
     id: "",
     recipient: "",
-    message: "",
+    text: "",
     variant: "shoutout",
   };
 
@@ -33,7 +33,7 @@ const Chat = () => {
     setShouldDropConfetti(true);
     setTimeout(() => {
       setShouldDropConfetti(false);
-    }, 5000); //this time can be adjusted, but it seems about right to account for the confetti "falling off the screen"
+    }, 5000);
   };
 
   const [newShoutout, setNewShoutout] = useState(emptyShoutout);

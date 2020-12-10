@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Canvas.css";
 
 const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
-  const { recipient, color, message } = newShoutout;
+  const { recipient, color, text } = newShoutout;
   const errorBaseState = { isError: false, message: "" };
   const [recipientError, setRecipientError] = useState(errorBaseState);
   const [colorError, setColorError] = useState(errorBaseState);
@@ -16,24 +16,23 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
   };
 
   const handleClick = (e) => {
-    console.log(color)
     if (!recipient) {
       setRecipientError({
         isError: true,
         message: "Give name to the hero!",
       });
     }
-    if (!color || color === "Background Color") {
+    if (!color || color === "Color") {
       setColorError({ isError: true, message: "Let's make it POP!" });
     }
-    if (!message) {
+    if (!text) {
       setMessageError({
         isError: true,
         message: "Don't toy with our hearts. Let the good vibes roll!",
       });
     }
 
-    if (!recipient || !color ||  color === "Background Color" || !message) {
+    if (!recipient || !color || color === "Color" || !text) {
       return;
     } else {
       setRecipientError(errorBaseState);
@@ -47,11 +46,10 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
     <div className="canvas-container">
       <section className="canvas-section" id="msg-form">
         <div className="msg-options">
-          <div className="flex-column">
+          <div className="flex-column recipient-input-container">
             <span className="errorMessage" >{recipientError.message}</span>
             <input
               id="recipient-input"
-              // style={recipientError.isError ? { border: "3px solid red" } : null}
               className="input"
               name="recipient"
               type="text"
@@ -68,12 +66,11 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
               }}
             />
           </div>
-          <div className="flex-column">
+          <div className="flex-column color-input-container">
             <span className="errorMessage" >{colorError.message}</span>
             <select
               className="input"
               id="color-input"
-              // style={colorError.isError ? { border: "3px solid red" } : null}
               name="color"
               onChange={handleInputChange}
               value={color}
@@ -84,7 +81,7 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
                 } : errorBaseState);
               }}
             >
-              <option>Background Color</option>
+              <option>Color</option>
 
               <option value="red">Red</option>
               <option value="orange">Orange</option>
@@ -94,33 +91,31 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
               <option value="purple">Purple</option>
             </select>
           </div>
-        <div className="flex-column">
-        <button
-          className="sendButton"
-          onClick={handleClick}
-          // disabled={disabled}
-        >
-          Send
+          <div className="flex-column">
+            <button
+              className="sendButton"
+              onClick={handleClick}
+            >
+              Send
         </button>
-        </div>
+          </div>
         </div>
         <div className="flex-column">
-          <span className="errorMessage" >{messageError.message}</span>
+          <span className="errorMessage">{messageError.message}</span>
           <textarea
             id="message-body"
             className="input"
-            // style={messageError.isError ? { border: "3px solid red" } : null}
-            rows="5"
+            rows="4"
             placeholder="Type a message..."
-            name="message"
-            value={message}
+            name="text"
+            value={text}
             onChange={handleInputChange}
             onKeyPress={(event) =>
               event.key === "Enter" ? sendShoutout(event) : null
             }
             onBlur={() => {
               setMessageError(
-                !message
+                !text
                   ? {
                     isError: true,
                     message: "Let everyone know who your praising!",
@@ -129,9 +124,6 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
             }}
           />
         </div>
-      </section>
-      <section className="canvas-section">
-       
       </section>
     </div>
   );
