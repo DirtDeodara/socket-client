@@ -53,6 +53,11 @@ import dog52 from "./52.png";
 import dog53 from "./53.png";
 import dog54 from "./54.png";
 import dog55 from "./55.png";
+import dog56 from "./56.png";
+import dog57 from "./57.jpg";
+import dog58 from "./58.jpg";
+import dog59 from "./59.png";
+import dog60 from "./60.png";
 
 const dogArray = [
   dog1,
@@ -110,6 +115,11 @@ const dogArray = [
   dog53,
   dog54,
   dog55,
+  dog56,
+  dog57,
+  dog58,
+  dog59,
+  dog60,
 ];
 
 export default dogArray;
