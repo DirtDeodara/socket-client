@@ -15,7 +15,7 @@
 }
 
 #recipient-input {
-  width: 250px;
+  width: 60%;
   margin-right: 8px;
 }
 
@@ -38,7 +38,7 @@
 }
 
 #color-input {
-  width: 125px;
+  width: 40%;
 }
 
 input:focus, textarea:focus, select:focus{
@@ -68,3 +68,9 @@ input:focus, textarea:focus, select:focus{
 	0%   { background-position: 0% center; }
 	100% { background-position: 100% center; }
 }
+
+/* @media (max-width: 767px) {
+  .sendButton {
+    padding: 10px 15px;
+  }
+} */

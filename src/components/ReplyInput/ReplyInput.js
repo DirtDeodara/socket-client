@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {ReactComponent as SendIcon} from "../../icons/send.svg";
 import './ReplyInput.css';
 
 const ReplyInput = ({ setMessage, sendMessage, message, buttonColor }) => (
@@ -12,7 +12,14 @@ const ReplyInput = ({ setMessage, sendMessage, message, buttonColor }) => (
       onChange={({ target: { value } }) => setMessage(value)}
       onKeyPress={event => event.key === 'Enter' ? sendMessage(event) : null}
     />
-    <button className="replyButton" style={{ backgroundColor: buttonColor, color: buttonColor === "#ffed49" ? "#333333" : "white" }}>Reply</button>
+    <button style={{background: "transparent", border: "none"}}>
+      <SendIcon
+        alt="comment"
+        fill="white"
+        width="30px"
+      />
+
+    </button>
   </form>
 )
 

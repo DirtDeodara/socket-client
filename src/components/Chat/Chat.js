@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import queryString from "query-string";
 import { v4 as uuidv4 } from "uuid";
 import Canvas from "../Canvas/Canvas";
 import DogHouse from "../DogHouse/DogHouse";
@@ -7,9 +6,11 @@ import Header from "../Header/Header";
 import MessageList from "../MessageList/MessageList";
 import Confetti from "react-confetti";
 import { socket } from "../../utils/socket";
+import { users } from "../../utils/passcodes";
 import "./Chat.css";
+import { useLocation } from "react-router";
 
-const Chat = ({ location }) => {
+const Chat = () => {
   const [user, setUser] = useState("");
   const emptyShoutout = {
     author: "",
@@ -19,6 +20,9 @@ const Chat = ({ location }) => {
     text: "",
     variant: "shoutout",
   };
+
+  const location = useLocation();
+  const code = new URLSearchParams(location.search).get("code");
 
   const [shouldDropConfetti, setShouldDropConfetti] = useState(false);
 
@@ -40,16 +44,16 @@ const Chat = ({ location }) => {
   });
 
   useEffect(() => {
-    const { name } = queryString.parse(location.search);
+    const user =  users.find(user => user.code === code);
 
-    setUser(name);
+    setUser(user.name);
 
-    socket.emit("join", { name }, (error) => {
+    socket.emit("join", user, (error) => {
       if (error) {
         alert(error);
       }
     });
-  }, [location.search]);
+  }, [code]);
 
   useEffect(() => {
     socket.on("shoutout", (newShoutout) => {

@@ -32,13 +32,13 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
               onChange={handleInputChange}
               value={color}
             >
-              <option>BG color</option>
-              <option value="purple">Purple</option>
-              <option value="darkOrange">Dark Orange</option>
+              <option>Background Color</option>
+              <option value="red">Red</option>
               <option value="orange">Orange</option>
               <option value="yellow">Yellow</option>
-              <option value="lightBlue">Light Blue</option>
+              <option value="green">Green</option>
               <option value="blue">Blue</option>
+              <option value="purple">Purple</option>
             </select>
           </div>
           <textarea

@@ -45,3 +45,9 @@
 .backgroundDark {
   background: #3d3d3d;
 }
+
+@media (max-width: 767px) {
+  .messageContainer {
+    margin: 20px 20px;
+  }
+}

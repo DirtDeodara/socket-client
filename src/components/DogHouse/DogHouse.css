@@ -1,7 +1,7 @@
 #dogHouseContainer {
   display: flex;
   height: 175px;
-  width: 600px;
+  max-width: 600px;
   justify-content: center;
 }
 
@@ -20,4 +20,11 @@
   margin: 4px 4px 4px 0;
   max-width: 500px;
   max-height: 175px;
+}
+
+
+@media (max-width: 767px) {
+  #dogHouseContainer {
+    max-width: 250px;
+  }
 }
