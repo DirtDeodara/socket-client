@@ -68,7 +68,7 @@ const Chat = () => {
       setMessageList((messageList) => [...messageList, newShoutout]);
       const user = users.find(user => user.code === code);
       
-      if (newShoutout.recipient === user.name) {
+      if (newShoutout.recipient.includes(user.name)) {
         toggleGif();
       }
     });
