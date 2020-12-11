@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { users } from "../../utils/passcodes";
 import "./Canvas.css";
 
 const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
@@ -15,8 +16,9 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
     });
   };
 
-  const handleClick = (e) => {
-    if (!recipient) {
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (!recipient || recipient === "Shoutout to...") {
       setRecipientError({
         isError: true,
         message: "Give name to the hero!",
@@ -32,7 +34,7 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
       });
     }
 
-    if (!recipient || !color || color === "Color" || !text) {
+    if (!recipient || recipient === "Shoutout to..." || !color || color === "Color" || !text) {
       return;
     } else {
       setRecipientError(errorBaseState);
@@ -44,17 +46,15 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
 
   return (
     <div className="canvas-container">
-      <section className="canvas-section" id="msg-form">
+      <form className="canvas-section" id="msg-form" onSubmit={handleSubmit}>
         <div className="msg-options">
           <div className="flex-column recipient-input-container">
-            <span className="errorMessage" >{recipientError.message}</span>
-            <input
+            <span className="errorMessage">{recipientError.message}</span>
+            <select
               id="recipient-input"
               className="input"
               name="recipient"
-              type="text"
               value={recipient}
-              placeholder="Shoutout to..."
               onChange={handleInputChange}
               onBlur={() => {
                 setRecipientError(
@@ -64,10 +64,14 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
                   } : errorBaseState
                 );
               }}
-            />
+            >
+              <option>Shoutout to...</option>
+              {users.map((user, i) => <option value={user.name} key={i}>{user.name}</option>)}
+            </select>
           </div>
+
           <div className="flex-column color-input-container">
-            <span className="errorMessage" >{colorError.message}</span>
+            <span className="errorMessage">{colorError.message}</span>
             <select
               className="input"
               id="color-input"
@@ -94,7 +98,6 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
           <div className="flex-column">
             <button
               className="sendButton"
-              onClick={handleClick}
             >
               Send
         </button>
@@ -124,7 +127,7 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
             }}
           />
         </div>
-      </section>
+      </form>
     </div>
   );
 };
