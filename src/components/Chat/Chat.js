@@ -7,8 +7,9 @@ import MessageList from "../MessageList/MessageList";
 import Confetti from "react-confetti";
 import { socket } from "../../utils/socket";
 import { users } from "../../utils/passcodes";
-import "./Chat.css";
 import { useLocation } from "react-router";
+import CelebratoryGif from "../CelebratoryGif/CelebratoryGif";
+import "./Chat.css";
 
 const Chat = () => {
   const [user, setUser] = useState("");
@@ -25,6 +26,7 @@ const Chat = () => {
   const code = new URLSearchParams(location.search).get("code");
 
   const [shouldDropConfetti, setShouldDropConfetti] = useState(false);
+  const [shouldRenderGif, setShouldRenderGif] = useState(false);
 
   const height = window.innerHeight;
   const width = window.innerWidth;
@@ -36,6 +38,13 @@ const Chat = () => {
     }, 5000);
   };
 
+  const toggleGif = () => {
+    setShouldRenderGif(true);
+    setTimeout(() => {
+      setShouldRenderGif(false);
+    }, 3000);
+  };
+
   const [newShoutout, setNewShoutout] = useState(emptyShoutout);
   const [messageList, setMessageList] = useState(() => {
     const storedMessageList = localStorage.getItem("storedMessages");
@@ -44,26 +53,30 @@ const Chat = () => {
   });
 
   useEffect(() => {
-    const user =  users.find(user => user.code === code);
-
-    setUser(user.name);
-
-    socket.emit("join", user, (error) => {
-      if (error) {
-        alert(error);
-      }
-    });
+      const user = users.find(user => user.code === code)
+      setUser(user.name);
+  
+      socket.emit("join", user, (error) => {
+        if (error) {
+          alert(error);
+        }
+      });
   }, [code]);
 
   useEffect(() => {
     socket.on("shoutout", (newShoutout) => {
       setMessageList((messageList) => [...messageList, newShoutout]);
+      const user = users.find(user => user.code === code);
+      
+      if (newShoutout.recipient.includes(user.name)) {
+        toggleGif();
+      }
     });
 
     socket.on("chatMessage", (chatMessage) => {
       setMessageList((messageList) => [...messageList, chatMessage]);
     });
-  }, []);
+  }, [code]);
 
   useEffect(() => {
     localStorage.setItem("storedMessages", JSON.stringify(messageList));
@@ -86,6 +99,7 @@ const Chat = () => {
 
   return (
     <>
+      {shouldRenderGif && <CelebratoryGif />}
       <div
         style={{
           position: "absolute",
