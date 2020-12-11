@@ -1,5 +1,6 @@
 .messageList {
   height: 100%;
+  min-width: 600px;
 }
 
 .scrollButton {

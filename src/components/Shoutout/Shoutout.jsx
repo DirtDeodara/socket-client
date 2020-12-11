@@ -127,7 +127,7 @@ const Shoutout = ({
             onClick={toggleCommentsOpen}
             width="30px"
           />
-          <h2>Shoutout to <span style={{ color: colorFactory[color].accent, fontFamily: "Kalam, sans-serif", fontSize: 30, fontWeight: 400
+          <h2>Shoutout to <span style={{ color: colorFactory[color].accent, fontFamily: "Gochi Hand, sans-serif", fontSize: 32, letterSpacing: 1
  }}>{recipient}</span></h2>
           <p className="shoutoutMessage">{text}</p>
           <div className="emojiRow">
@@ -135,7 +135,7 @@ const Shoutout = ({
             <Emoji id={id} label="love" symbol="❤️" handleConfetti={handleConfetti}/>
             <Emoji id={id} label="up" symbol="☝️" handleConfetti={handleConfetti}/>
           </div>
-          <h3 className="author">{author}</h3>
+          <h3 className="author" style={{fontFamily: "Gochi Hand, sans serif", fontSize: 25, letterSpacing: 1}}>{author}</h3>
         </div>
       </div>
       <CommentContainer

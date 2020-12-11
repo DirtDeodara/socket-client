@@ -53,7 +53,7 @@ const Chat = () => {
         alert(error);
       }
     });
-  }, [code]);
+  }, [code, user]);
 
   useEffect(() => {
     socket.on("shoutout", (newShoutout) => {
