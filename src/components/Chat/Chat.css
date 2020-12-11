@@ -18,6 +18,7 @@
 }
 
 #canvasAndDogHouseContainer {
+  min-width: 600px;
   background-color: rgba(50, 146, 210, 0.8);
   display: flex;
   align-items: center;

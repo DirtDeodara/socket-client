@@ -6,7 +6,6 @@ import "./MessageList.css";
 
 const MessageList = ({ messageList, handleConfetti }) => {
 
-
   return (
     <ScrollToBottom checkInterval={200} className="messageList" followButtonClassName="scrollButton">
       {messageList.map((messageItem, i) => {
