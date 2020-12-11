@@ -50,6 +50,7 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
       setColorError(errorBaseState);
       setMessageError(errorBaseState);
       sendShoutout(e);
+      setHideRecipientInput(false);
     }
   };
 
