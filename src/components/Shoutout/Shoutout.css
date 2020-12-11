@@ -110,6 +110,16 @@ h3 {
   margin-bottom: 400px;
 }
 
+.pulse {
+	animation: beat .25s infinite alternate;
+	transform-origin: center;
+}
+
+/* Heart beat animation */
+@keyframes beat{
+	to { transform: scale(1.4); }
+}
+
 @media (max-width: 767px) {
   .shoutoutOuterContainer {
     margin: 20px 20px;
