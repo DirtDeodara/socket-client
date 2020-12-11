@@ -118,7 +118,7 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
                 !text
                   ? {
                     isError: true,
-                    message: "Let everyone know who your praising!",
+                    message: "Don't toy with our hearts. Let the good vibes roll!",
                   } : errorBaseState
               );
             }}
