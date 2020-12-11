@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Join.css';
 import { users } from "../../utils/passcodes";
 import { useHistory } from "react-router-dom";
+import drivewayIcon from "../../icons/favicon-256.png";
 
 
 const Join = () => {
@@ -21,7 +22,8 @@ const Join = () => {
   return(
     <div className="joinOuterContainer">
       <div className="joinInnerContainer">
-        <h1 className="heading">Join</h1>
+        <img src={drivewayIcon} />
+        <h1 className="heading">Join Driveway Shoutouts!</h1>
         <form onSubmit={handleLogin}>
           <input placeholder="Passcode" className="joinInput" type="text" onChange={(event) => setPasscode(event.target.value)} />
           <button className="btn mt-20" type="submit">Sign In</button>
