@@ -1,5 +1,6 @@
 .canvas-container {
   width: 100%;
+  min-width: 550px;
   flex: 5;
   display: flex;
   justify-content: center;
