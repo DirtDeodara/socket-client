@@ -84,6 +84,10 @@ export const users = [
     code: "L58FQ6"
   },
   {
+    name: "George H",
+    code: "N9PUT3"
+  },
+  {
     name: "Halie H",
     code: "SQW4C7"
   },
@@ -124,6 +128,10 @@ export const users = [
     code: "KB84PL"
   },
   {
+    name: "Kent B",
+    code: "AWESOMESAUCE"
+  },
+  {
     name: "Lucas B",
     code: "C2736K"
   },
@@ -152,16 +160,16 @@ export const users = [
     code: "S3AP9X"
   },
   {
-    name: "Ross S", // Scully or Sherman?
-    code: "Y4FQHR"
-  },
-  {
-    name: "Ross S", // Scully or Sherman?
+    name: "Ross Sh",
     code: "D6J2TQ"
   },
   {
     name: "Sachin B",
     code: "XWVU57"
+  },
+  {
+    name: "Scully",
+    code: "Y4FQHR"
   },
   {
     name: "Shiyuan D",

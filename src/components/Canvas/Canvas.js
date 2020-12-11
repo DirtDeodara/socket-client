@@ -8,17 +8,26 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
   const [recipientError, setRecipientError] = useState(errorBaseState);
   const [colorError, setColorError] = useState(errorBaseState);
   const [messageError, setMessageError] = useState(errorBaseState);
+  const [hideRecipientInput, setHideRecipientInput] = useState(false);
 
   const handleInputChange = (e) => {
     setNewShoutout({
       ...newShoutout,
       [e.target.name]: e.target.value,
     });
+
+    if (e.target.id === "recipient-select" && e.target.value !== "Select Teammate") {
+      setHideRecipientInput(true);
+    }
+
+    if (e.target.id === "recipient-select" && e.target.value === "Select Teammate") {
+      setHideRecipientInput(false);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (!recipient || recipient === "Shoutout to...") {
+    if (!recipient || recipient === "Select Teammate") {
       setRecipientError({
         isError: true,
         message: "Give name to the hero!",
@@ -34,7 +43,7 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
       });
     }
 
-    if (!recipient || recipient === "Shoutout to..." || !color || color === "Color" || !text) {
+    if (!recipient || recipient === "Select Teammate" || !color || color === "Color" || !text) {
       return;
     } else {
       setRecipientError(errorBaseState);
@@ -50,24 +59,44 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
         <div className="msg-options">
           <div className="flex-column recipient-input-container">
             <span className="errorMessage">{recipientError.message}</span>
-            <select
-              id="recipient-input"
-              className="input"
-              name="recipient"
-              value={recipient}
-              onChange={handleInputChange}
-              onBlur={() => {
-                setRecipientError(
-                  !recipient ? {
-                    isError: true,
-                    message: "Give name to the hero!",
-                  } : errorBaseState
-                );
-              }}
-            >
-              <option>Shoutout to...</option>
-              {users.map((user, i) => <option value={user.name} key={i}>{user.name}</option>)}
-            </select>
+            <div>
+              <select
+                id="recipient-select"
+                className="input"
+                name="recipient"
+                value={recipient}
+                onChange={handleInputChange}
+                onBlur={() => {
+                  setRecipientError(
+                    !recipient ? {
+                      isError: true,
+                      message: "Give name to the hero!",
+                    } : errorBaseState
+                  );
+                }}
+              >
+                <option>Select Teammate</option>
+                {users.map((user, i) => <option value={user.name} key={i}>{user.name}</option>)}
+              </select>
+              {!hideRecipientInput && <p>or</p>}
+              {!hideRecipientInput && <input
+                id="recipient-input"
+                className="input"
+                name="recipient"
+                type="text"
+                value={recipient === "Select Teammate" ? null : recipient}
+                placeholder="Enter recipients"
+                onChange={handleInputChange}
+                onBlur={() => {
+                  setRecipientError(
+                    !recipient ? {
+                      isError: true,
+                      message: "Give name to the hero!",
+                    } : errorBaseState
+                  );
+                }}
+              />}
+            </div>
           </div>
 
           <div className="flex-column color-input-container">
@@ -109,7 +138,7 @@ const Canvas = ({ setNewShoutout, sendShoutout, newShoutout }) => {
             id="message-body"
             className="input"
             rows="4"
-            placeholder="Type a message..."
+            placeholder="Type a message celebrating the awesomeness of your team members..."
             name="text"
             value={text}
             onChange={handleInputChange}
